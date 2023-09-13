@@ -1,14 +1,15 @@
-import type { Request, Response } from "express";
+import type { Response } from "express";
 import User from "../models/User";
 import asyncHandler from "express-async-handler";
 import { generateJWT } from "../helper/jwt";
+import { IRequest } from "../types/IRequest";
 
 /* 
  @Desc Get all users
  @Route /api/auth
  @Method GET
  */
-const getAll = asyncHandler(async (req: Request, res: Response) => {
+const getAll = asyncHandler(async (req: IRequest, res: Response) => {
   const users = await User.find({}).select("-password");
   res.status(201).json({ count: users.length, users });
 });
@@ -18,7 +19,7 @@ const getAll = asyncHandler(async (req: Request, res: Response) => {
  @Route /api/auth/
  @Method POST
  */
-const login = asyncHandler(async (req: Request, res: Response) => {
+const login = asyncHandler(async (req: IRequest, res: Response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
@@ -57,7 +58,7 @@ const login = asyncHandler(async (req: Request, res: Response) => {
   @Route /api/auth/register
   @Method POST
 */
-const registerUser = asyncHandler(async (req: Request, res: Response) => {
+const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
   const { email, username, password } = req.body;
 
   const user = new User({
