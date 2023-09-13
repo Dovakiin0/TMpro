@@ -1,17 +1,21 @@
 import express, { Express } from "express";
-import dotenv from "dotenv";
-import http from "http";
-import InjectRoutes from "@/routes/router";
+import http, { Server } from "http";
+import InjectRoutes from "./routes/router";
+import morgan from "morgan";
 import cors from "cors";
-dotenv.config(); // initialize dotenv
+import { errorHandler } from "./middlewares/ErrorMiddleware";
 
 const app: Express = express();
-const server = http.createServer(app);
+const server: Server = http.createServer(app);
 
 // middlewares for the application
 app.use(cors());
 app.use(express.json());
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms"),
+);
 app.use(express.urlencoded({ extended: false }));
+app.use(errorHandler);
 
 // add all routes for the application
 InjectRoutes(app);
