@@ -1,14 +1,22 @@
-FROM node:18-alpine
 
-WORKDIR /app/TaskMaster/server
-
+# Stage 1 - create a base image
+FROM node:18-alpine as base
+WORKDIR /app/TMPro/server
 COPY package.json ./
-
-RUN npm install
-
+RUN yarn
 COPY . .
 
-RUN npm run build
+# Stage 2 - Run Test
+FROM base as test
 
+#Stage 3 - Run Development
+FROM base as development
+EXPOSE 3030
+CMD ["yarn", , "dev"]
+
+# Stage 3 - Build for production
+FROM base as production
+RUN npm run build
 EXPOSE 3030
 CMD ["node", "dist/index.js"]
+

@@ -1,0 +1,28 @@
+version: "3"
+services:
+  server:
+    container_name: "TMpro_server"
+    build:
+      context: ./server/
+      target: test
+    ports:
+      - "3030:3030"
+    environment:
+      - MONGO_URI=mongodb://mongo_db:27017/TMpro_test
+      - JWT_TOKEN=verysecretkey
+      - NODE_ENV=test
+    depends_on:
+      - mongo_db
+    command: [ "yarn", "test" ]
+
+  mongo_db:
+    container_name: "TMpro_db"
+    image: mongodb/mongodb-community-server
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:
