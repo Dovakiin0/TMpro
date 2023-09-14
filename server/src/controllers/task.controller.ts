@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import type { Response } from "express";
 import Task from "../models/Task";
 import { IRequest } from "../types/IRequest";
+import mongoose from "mongoose";
 
 /* 
  @Desc Get all Tasks
@@ -19,6 +20,11 @@ const getAllTasks = asyncHandler(async (req: IRequest, res: Response) => {
  @Method GET
  */
 const getTaskById = asyncHandler(async (req: IRequest, res: Response) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400);
+    throw new Error("invalid Id");
+  }
+
   const task = await Task.findById(req.params.id);
   if (!task) {
     res.status(404);
@@ -56,6 +62,10 @@ const createTask = asyncHandler(async (req: IRequest, res: Response) => {
  */
 const updateTask = asyncHandler(async (req: IRequest, res: Response) => {
   const taskBody = req.body;
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400);
+    throw new Error("invalid Id");
+  }
 
   const task = await Task.findByIdAndUpdate(req.params.id, {
     ...taskBody,
@@ -77,13 +87,16 @@ const updateTask = asyncHandler(async (req: IRequest, res: Response) => {
  @Method DELETE
  */
 const deleteTask = asyncHandler(async (req: IRequest, res: Response) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400);
+    throw new Error("invalid Id");
+  }
   const task = await Task.findByIdAndDelete(req.params.id);
   if (!task) {
     res.status(400);
     throw new Error("Task Not found");
   }
 
-  await task.save();
   res.status(200).json({ message: "success" });
 });
 

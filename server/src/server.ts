@@ -4,6 +4,7 @@ import InjectRoutes from "./routes/router";
 import morgan from "morgan";
 import cors from "cors";
 import { errorHandler } from "./middlewares/ErrorMiddleware";
+import cookieParser from "cookie-parser";
 
 const app: Express = express();
 const server: Server = http.createServer(app);
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms"),
 );
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(errorHandler);
 

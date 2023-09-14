@@ -11,7 +11,7 @@ import { IRequest } from "../types/IRequest";
  */
 const getAll = asyncHandler(async (req: IRequest, res: Response) => {
   const users = await User.find({}).select("-password");
-  res.status(201).json({ count: users.length, users });
+  res.status(200).json({ count: users.length, users });
 });
 
 /* 
@@ -32,7 +32,7 @@ const login = asyncHandler(async (req: IRequest, res: Response) => {
     const expireDate = 7 * 24 * 60 * 60 * 1000; // 7 days
 
     res
-      .status(201)
+      .status(200)
       .cookie("access_token", user.token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
