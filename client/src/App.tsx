@@ -1,22 +1,26 @@
-import { Loader, MantineProvider, Text } from "@mantine/core";
+import { Loader, MantineProvider, createEmotionCache } from "@mantine/core";
 import { ThemeOptions } from "./config/ThemeOptions";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./config/router";
 import { Suspense } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
-const queryClient = new QueryClient();
+const emotionCache = createEmotionCache({ key: "mantine", prepend: false });
 
 function App() {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={ThemeOptions}>
-      <Suspense fallback={<Loader />}>
-        <QueryClientProvider client={queryClient}>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={ThemeOptions}
+      emotionCache={emotionCache}
+    >
+      <Provider store={store}>
+        <Suspense fallback={<Loader />}>
           <RouterProvider router={router} />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </Suspense>
+        </Suspense>
+      </Provider>
     </MantineProvider>
   );
 }
