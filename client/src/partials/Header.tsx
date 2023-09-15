@@ -1,5 +1,6 @@
 import { Header as MantineHeader, Image } from "@mantine/core";
 import UserAvatar from "./UserAvatar";
+import { MdNotifications } from "react-icons/md";
 
 type Props = {};
 
@@ -10,7 +11,8 @@ function Header({ }: Props) {
         <div className="w-28">
           <Image src="/full.png" />
         </div>
-        <div>
+        <div className="flex items-center space-x-5">
+          <MdNotifications size={25} />
           <UserAvatar />
         </div>
       </div>

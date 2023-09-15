@@ -1,8 +1,10 @@
-import { Text } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { BiTask } from "react-icons/bi";
 import TaskCard from "../components/TaskCard";
 import { ITask } from "../types/ITask";
-import AddTaskCard from "../components/AddTaskCard";
+import { AiOutlinePlus } from "react-icons/ai";
+import { useDisclosure } from "@mantine/hooks";
+import AddModal from "../components/TaskModal/AddModal";
 
 type Props = {};
 
@@ -21,15 +23,24 @@ function Home({ }: Props) {
     .fill(dummyTask)
     .map((d, i) => ({ ...d, _id: d._id + i }));
 
+  const [opened, { open, close }] = useDisclosure(false);
+
   return (
     <>
+      <AddModal opened={opened} close={close} />
       <div className="flex w-full flex-col space-y-5">
-        <div className="flex space-x-3 items-center text-3xl">
-          <BiTask className="text-gray-400" />
-          <Text>Tasks</Text>
+        <div className="flex items-center justify-between text-3xl">
+          <div className="flex items-center space-x-3">
+            <BiTask className="text-gray-400" />
+            <Text>Tasks</Text>
+          </div>
+          <div>
+            <Button color="red" leftIcon={<AiOutlinePlus />} onClick={open}>
+              Create New
+            </Button>
+          </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          <AddTaskCard />
           {dummyList.map((d, i) => (
             <TaskCard key={i} {...d} />
           ))}

@@ -2,7 +2,7 @@ import { Card, Text, Badge, Button, Group } from "@mantine/core";
 import { ITask } from "../types/ITask";
 import { useDisclosure } from "@mantine/hooks";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import TaskEditModal from "./TaskEditModal";
+import EditModal from "./TaskModal/EditModal";
 
 export default function TaskCard({
   _id,
@@ -21,7 +21,7 @@ export default function TaskCard({
 
   return (
     <>
-      <TaskEditModal
+      <EditModal
         opened={opened}
         close={close}
         task={{ _id, title, description, priority, deadline, completed, user }}

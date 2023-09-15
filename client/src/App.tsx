@@ -1,10 +1,11 @@
-import { Loader, MantineProvider, createEmotionCache } from "@mantine/core";
+import { MantineProvider, createEmotionCache } from "@mantine/core";
 import { ThemeOptions } from "./config/ThemeOptions";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/router";
 import { Suspense } from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import Loader from "./components/Loader";
 
 const emotionCache = createEmotionCache({ key: "mantine", prepend: false });
 
