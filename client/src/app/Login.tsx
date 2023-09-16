@@ -18,7 +18,7 @@ import useAuth from "../hooks/useAuth";
 
 type Props = {};
 
-function Login({ }: Props) {
+function Login({}: Props) {
   const { authenticated, current } = useAppSelector((state) => state.auth);
   const { login, loading } = useAuth();
   const navigate = useNavigate();
@@ -29,8 +29,6 @@ function Login({ }: Props) {
       password: "",
     },
   });
-
-  console.log(current, authenticated);
 
   const handleSubmit = (values: ILoginUser) => {
     login(values);
@@ -55,7 +53,13 @@ function Login({ }: Props) {
       <div className="w-32">
         <Image src="/full.png" />
       </div>
-      <Card shadow="sm" padding="lg" radius="md" withBorder className={`w-1/4`}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        className={`w-full xl:w-1/4`}
+      >
         <div className="m-2 flex flex-col space-y-2">
           <Text size={25} weight={"bold"}>
             Login to your account

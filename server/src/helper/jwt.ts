@@ -13,8 +13,13 @@ export const generateJWT = (id: string): string => {
   });
 };
 
-export const verifyJWT = (token: string): IJWT => {
-  return jwt.verify(token, process.env.JWT_SECRET as string) as IJWT;
+export const verifyJWT = (token: string): IJWT | null => {
+  try {
+    let decode = jwt.verify(token, process.env.JWT_SECRET as string) as IJWT;
+    return decode;
+  } catch (error) {
+    return null;
+  }
 };
 
 export const comparePwd = (password: string, hashPwd: string): boolean => {

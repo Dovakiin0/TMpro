@@ -1,35 +1,30 @@
 import { Avatar, Menu } from "@mantine/core";
 import { MdSettings, MdPowerSettingsNew } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../hooks/useReducer";
 
 type Props = {};
 
-function UserAvatar({ }: Props) {
+function UserAvatar({}: Props) {
   const { logoutUser } = useAuth();
-  const navigate = useNavigate();
+  const { current } = useAppSelector((state) => state.auth);
 
   return (
     <>
       <Menu position="bottom-end" withArrow shadow="md" width={200}>
         <Menu.Target>
-          <Avatar
-            src="https://avatars.githubusercontent.com/u/50291191?v=4"
-            radius="xl"
-            className="hover:cursor-pointer"
-          />
+          <Avatar radius="xl" className="hover:cursor-pointer">
+            {current?.username?.[0].toUpperCase()}
+          </Avatar>
         </Menu.Target>
 
         <Menu.Dropdown>
-          <Menu.Label>Logged in as: Dovakiin0</Menu.Label>
+          <Menu.Label>Logged in as: {current?.username}</Menu.Label>
           <Menu.Item icon={<MdSettings size={14} />}>Settings</Menu.Item>
           <Menu.Item
             color="red"
             icon={<MdPowerSettingsNew size={14} />}
-            onClick={() => {
-              logoutUser();
-              navigate("/login");
-            }}
+            onClick={logoutUser}
           >
             Logout
           </Menu.Item>

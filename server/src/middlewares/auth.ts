@@ -10,15 +10,10 @@ export const isAuth = async (
 ) => {
   try {
     let token = req.cookies["access_token"];
-    if (token === null || typeof token === "undefined") {
-      return;
-    }
-
     const decoded = verifyJWT(token);
 
-    if (!decoded.id) {
-      res.status(401);
-      throw new Error("Not Authorized");
+    if (decoded === null) {
+      return;
     }
 
     const user = await User.findById(decoded.id).select("-password");

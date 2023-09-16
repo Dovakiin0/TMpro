@@ -15,10 +15,7 @@ const getAll = asyncHandler(async (req: IRequest, res: Response) => {
 });
 
 const getMe = asyncHandler(async (req: IRequest, res: Response) => {
-  if (req.user) {
-    res.status(200).json(req.user);
-  }
-  res.status(401);
+  res.status(200).json(req.user);
 });
 
 /* 
@@ -40,7 +37,7 @@ const login = asyncHandler(async (req: IRequest, res: Response) => {
 
     res
       .status(200)
-      .cookie("access_token", user.token, {
+      .cookie("access_token", generateJWT(user._id), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         expires: new Date(Date.now() + expireDate),
@@ -51,7 +48,6 @@ const login = asyncHandler(async (req: IRequest, res: Response) => {
           id: user._id,
           email: user.email,
           username: user.username,
-          token: generateJWT(user._id),
         },
       });
   } else {
@@ -90,13 +86,12 @@ const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
       user: {
         email: user.email,
         fullName: user.username,
-        token: generateJWT(user._id),
       },
     });
 });
 
 const logout = asyncHandler(async (req: IRequest, res: Response) => {
-  res.cookie("access_token", "", { expires: new Date(0) });
+  res.clearCookie("access_token");
   res.status(200).json({ success: true, message: "Logged out successfully" });
 });
 

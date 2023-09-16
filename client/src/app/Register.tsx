@@ -18,7 +18,7 @@ import { useAppSelector } from "../hooks/useReducer";
 
 type Props = {};
 
-function Register({ }: Props) {
+function Register({}: Props) {
   const { current, authenticated } = useAppSelector((state) => state.auth);
   const theme = useMantineTheme();
   const navigate = useNavigate();
@@ -60,7 +60,13 @@ function Register({ }: Props) {
       <div className="w-32">
         <Image src="/full.png" />
       </div>
-      <Card shadow="sm" padding="lg" radius="md" withBorder className={`w-1/4`}>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        className={`w-full h-1/2 xl:w-1/4`}
+      >
         <div className="m-2 flex flex-col space-y-2">
           <Text size={25} weight={"bold"}>
             Create New Account

@@ -4,10 +4,8 @@ import TMLayout from "../partials/TMLayout";
 
 type Props = {};
 
-function ProtectedRoute({ }: Props) {
+function ProtectedRoute({}: Props) {
   const auth = useAppSelector((state) => state.auth);
-
-  console.log(auth);
 
   if (!auth.authenticated) return <Navigate to="/login" />;
 

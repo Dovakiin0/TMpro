@@ -21,7 +21,7 @@ export default function useAuth() {
         dispatch(loginSuccess(response.data));
       }
     } catch (err: any) {
-      console.log(err);
+      return;
     }
   };
 
@@ -66,6 +66,7 @@ export default function useAuth() {
       if (response.status === 200) {
         setData(response.data);
         dispatch(logout);
+        window.location.reload();
       }
     } catch (err: any) {
       setErrors(err);
