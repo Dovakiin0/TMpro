@@ -8,6 +8,7 @@ import {
   editTask,
   setTasks,
 } from "../store/reducer/taskSlice";
+import useNotification from "./useNotification";
 
 type Props = {};
 
@@ -16,6 +17,7 @@ function useTask() {
   const [errors, setErrors] = useState();
   const dispatch = useAppDispatch();
   const { tasks, count } = useAppSelector((state) => state.task);
+  const { Success } = useNotification();
 
   useEffect(() => {
     fetchTasks();
@@ -27,6 +29,7 @@ function useTask() {
       const response = await client.post("api/tasks", values);
       if (response.status === 201) {
         dispatch(createTask(response.data.task));
+        Success({ message: "Task Created Successfully!", loading });
         cb?.();
       }
     } catch (error) {
@@ -46,6 +49,7 @@ function useTask() {
       const response = await client.put(`api/tasks/${_id}`, values);
       if (response.status === 200) {
         dispatch(editTask(response.data.task));
+        Success({ message: "Task Edited Successfully!", loading });
         cb?.();
       }
     } catch (error) {
@@ -74,6 +78,7 @@ function useTask() {
       setLoading(true);
       const response = await client.delete(`api/tasks/${_id}`);
       if (response.status === 200) {
+        Success({ message: "Task Deleted Successfully!", loading });
         dispatch(deleteTask(_id));
       }
     } catch (error) {

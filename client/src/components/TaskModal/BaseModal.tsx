@@ -1,6 +1,9 @@
 import { Modal, Text, SegmentedControlItem, Center } from "@mantine/core";
-import { IoMdWarning } from "react-icons/io";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import {
+  FcHighPriority,
+  FcMediumPriority,
+  FcLowPriority,
+} from "react-icons/fc";
 
 type Props = {
   opened: boolean;
@@ -16,7 +19,7 @@ export const segmentedData: SegmentedControlItem[] = [
     value: "HIGH",
     label: (
       <Center className="gap-2">
-        <IoMdWarning size={18} />
+        <FcHighPriority size={18} />
         <Text size="md">HIGH</Text>
       </Center>
     ),
@@ -25,7 +28,7 @@ export const segmentedData: SegmentedControlItem[] = [
     value: "MEDIUM",
     label: (
       <Center className="gap-2">
-        <AiOutlineExclamationCircle size={18} />
+        <FcMediumPriority size={18} />
         <Text size="md">MEDIUM</Text>
       </Center>
     ),
@@ -34,7 +37,7 @@ export const segmentedData: SegmentedControlItem[] = [
     value: "LOW",
     label: (
       <Center className="gap-2">
-        <IoMdWarning size={18} />
+        <FcLowPriority size={18} />
         <Text size="md">LOW</Text>
       </Center>
     ),

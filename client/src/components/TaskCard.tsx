@@ -40,13 +40,19 @@ export default function TaskCard({
   }
 
   function getDateTextColor(dateTime: string): string {
+    if (completed) {
+      return "dimmed";
+    }
     if (dayjs(dateTime).isBefore(dayjs())) {
       return "red";
     }
     if (dayjs(dateTime).isToday()) {
-      return "yellow";
+      return "orange";
     }
-    return "";
+    if (dayjs(dateTime).isTomorrow()) {
+      return "lightyellow";
+    }
+    return "white";
   }
 
   return (
@@ -78,7 +84,9 @@ export default function TaskCard({
           <div className="flex flex-col h-full justify-between">
             <div>
               <div className="flex items-center space-x-2">
-                <AiOutlineClockCircle />
+                <AiOutlineClockCircle
+                  color={!completed && getDateTextColor(deadline)}
+                />
                 <Text
                   strikethrough={completed}
                   color={getDateTextColor(deadline)}
@@ -99,7 +107,12 @@ export default function TaskCard({
                 </Badge>
               </Group>
 
-              <Text strikethrough={completed} size="md" color="dimmed">
+              <Text
+                strikethrough={completed}
+                size="md"
+                color="dimmed"
+                className="line-clamp-5"
+              >
                 {description}
               </Text>
             </div>

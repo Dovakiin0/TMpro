@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { ILoginUser, IRegisterUser } from "../types/IUser";
 import { client } from "../config/client";
-import { useAppDispatch } from "./useReducer";
+import { useAppDispatch, useAppSelector } from "./useReducer";
 import { loginSuccess, logout } from "../store/reducer/authSlice";
 
 export default function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState();
+  const { current } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -71,5 +72,5 @@ export default function useAuth() {
     }
   };
 
-  return { login, loading, errors, register, logoutUser };
+  return { login, loading, errors, register, logoutUser, current };
 }

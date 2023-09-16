@@ -58,11 +58,12 @@ function EditModal({
   }, [form.values]);
 
   function handleSubmit(values: ITaskRequest) {
-    console.log(values);
     editTaskId(values, _id, () => {
       close();
     });
   }
+
+  console.log(completed);
 
   return (
     <BaseModal opened={opened} close={close} closeCb={() => form.reset()}>
@@ -76,6 +77,7 @@ function EditModal({
             <Chip
               color="green"
               variant="filled"
+              defaultChecked={completed}
               {...form.getInputProps("completed")}
             >
               Mark Completed
@@ -113,6 +115,7 @@ function EditModal({
           withAsterisk
           label="Description"
           required
+          autosize
           {...form.getInputProps("description")}
         />
         <SegmentedControl

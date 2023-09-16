@@ -18,6 +18,7 @@ function App() {
       theme={ThemeOptions}
       emotionCache={emotionCache}
     >
+      <Notifications position="bottom-center" zIndex={999} limit={5} />
       <Provider store={store}>
         <Suspense fallback={<Loader />}>
           <RouterProvider router={router} />

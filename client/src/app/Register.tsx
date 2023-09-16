@@ -77,6 +77,10 @@ function Register({ }: Props) {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       confirm_password: (value, values) =>
         values.password !== value ? "Password Does not match" : null,
+      username: (value) =>
+        value.length <= 3 ? "Username must be more than 3 characters" : null,
+      password: (value) =>
+        value.length === 0 ? "Password cannot be empty" : null,
     },
   });
 
@@ -144,7 +148,7 @@ function Register({ }: Props) {
           >
             <TextInput
               withAsterisk
-              label="username"
+              label="Username"
               {...form.getInputProps("username")}
             />
             <TextInput

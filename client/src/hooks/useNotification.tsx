@@ -1,17 +1,16 @@
 import { notifications } from "@mantine/notifications";
 import { MdCheckCircle, MdWarning, MdDangerous } from "react-icons/md";
 
-type Props = {};
-
 interface INotification {
   message: string;
-  loading: boolean;
+  loading?: boolean;
 }
 
-function useNotification({ }: Props) {
+function useNotification() {
   const Success = ({ message, loading = false }: INotification) => {
     notifications.show({
       title: "Success",
+      autoClose: 5000,
       message: message,
       loading: loading,
       color: "green",
@@ -22,6 +21,7 @@ function useNotification({ }: Props) {
   const Warning = ({ message, loading = false }: INotification) => {
     notifications.show({
       title: "Warning",
+      autoClose: 5000,
       message: message,
       loading: loading,
       color: "green",
@@ -32,6 +32,7 @@ function useNotification({ }: Props) {
   const Error = ({ message, loading = false }: INotification) => {
     notifications.show({
       title: "Error",
+      autoClose: 5000,
       message: message,
       loading: loading,
       color: "red",
@@ -41,5 +42,4 @@ function useNotification({ }: Props) {
 
   return { Success, Warning, Error };
 }
-
 export default useNotification;
