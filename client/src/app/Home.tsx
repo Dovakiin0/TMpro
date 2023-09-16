@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Text } from "@mantine/core";
+import { ActionIcon, Button, Text, Card } from "@mantine/core";
 import { BiTask } from "react-icons/bi";
 import TaskCard from "../components/TaskCard";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -8,6 +8,7 @@ import { useRef } from "react";
 import useOnScreen from "../hooks/useOnScreen";
 import { motion } from "framer-motion";
 import useTask from "../hooks/useTask";
+import { TbMoodEmpty } from "react-icons/tb";
 
 type Props = {};
 
@@ -15,8 +16,14 @@ function Home({ }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const createButtonRef = useRef<HTMLButtonElement | null>(null);
   const isCreateButtonVisible = useOnScreen(createButtonRef);
-  const { tasks, toggleTaskCompleted, loading, createNewTask, editTaskId } =
-    useTask();
+  const {
+    tasks,
+    toggleTaskCompleted,
+    loading,
+    createNewTask,
+    editTaskId,
+    deleteTaskId,
+  } = useTask();
 
   return (
     <>
@@ -44,6 +51,23 @@ function Home({ }: Props) {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {tasks.length === 0 && (
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              withBorder
+              className={`h-[300px]`}
+              sx={{
+                opacity: 0.7,
+              }}
+            >
+              <div className="flex flex-col w-full h-full justify-center items-center">
+                <TbMoodEmpty size={40} />
+                <Text weight="bold">Such Empty</Text>
+              </div>
+            </Card>
+          )}
           {tasks.map((task) => (
             <TaskCard
               {...task}
@@ -51,6 +75,7 @@ function Home({ }: Props) {
               toggleTaskCompleted={toggleTaskCompleted}
               loading={loading}
               editTaskId={editTaskId}
+              deleteTaskId={deleteTaskId}
             />
           ))}
         </div>

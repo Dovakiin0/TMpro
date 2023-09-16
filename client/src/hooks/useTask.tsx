@@ -72,9 +72,9 @@ function useTask() {
   const deleteTaskId = async (_id: string) => {
     try {
       setLoading(true);
-      const response = await client.post("api/tasks");
+      const response = await client.delete(`api/tasks/${_id}`);
       if (response.status === 200) {
-        dispatch(deleteTask);
+        dispatch(deleteTask(_id));
       }
     } catch (error) {
       setErrors(errors);

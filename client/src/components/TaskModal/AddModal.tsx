@@ -40,7 +40,10 @@ function AddModal({ opened, close, createNewTask, loading }: Props) {
   }, [form.values]);
 
   function handleSubmit(values: ITaskCreateRequest) {
-    createNewTask(values, () => close());
+    createNewTask(values, () => {
+      form.reset();
+      close();
+    });
   }
 
   return (

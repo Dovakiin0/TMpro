@@ -5,8 +5,10 @@ import BaseModal, {
 } from "./BaseModal";
 import { useEffect, useState } from "react";
 import {
+  ActionIcon,
   Button,
   Chip,
+  Popover,
   SegmentedControl,
   Text,
   TextInput,
@@ -17,6 +19,7 @@ import { useForm } from "@mantine/form";
 import { ITaskRequest } from "../../types/ITaskRequest";
 import { DateTimePicker } from "@mantine/dates";
 import dayjs from "dayjs";
+import { IoMdTrash } from "react-icons/io";
 
 type Props = {
   opened: boolean;
@@ -24,6 +27,7 @@ type Props = {
   task: ITask;
   loading: boolean;
   editTaskId: (values: ITaskRequest, _id: string, cb?: () => void) => void;
+  deleteTaskId: (_id: string) => void;
 };
 
 function EditModal({
@@ -32,6 +36,7 @@ function EditModal({
   task: { _id, description, title, deadline, completed, priority },
   loading,
   editTaskId,
+  deleteTaskId,
 }: Props) {
   const [segmentColor, setSegmentColor] = useState(
     selectSegementedColor(priority),
@@ -67,13 +72,36 @@ function EditModal({
       >
         <div className="flex justify-between items-center">
           <Text size="xl">Task</Text>
-          <Chip
-            color="green"
-            variant="filled"
-            {...form.getInputProps("completed")}
-          >
-            Mark Completed
-          </Chip>
+          <div className="flex items-center space-x-3">
+            <Chip
+              color="green"
+              variant="filled"
+              {...form.getInputProps("completed")}
+            >
+              Mark Completed
+            </Chip>
+            <Popover position="left">
+              <Popover.Target>
+                <ActionIcon>
+                  <IoMdTrash size={20} color="orange" />
+                </ActionIcon>
+              </Popover.Target>
+              <Popover.Dropdown>
+                <div>
+                  <Text>Are you sure you want to delete?</Text>
+                  <Button
+                    color="red"
+                    onClick={() => {
+                      deleteTaskId(_id);
+                      close();
+                    }}
+                  >
+                    Yes, I'm sure
+                  </Button>
+                </div>
+              </Popover.Dropdown>
+            </Popover>
+          </div>
         </div>
         <TextInput
           withAsterisk

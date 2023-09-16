@@ -4,14 +4,15 @@ import { useDisclosure } from "@mantine/hooks";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import EditModal from "./TaskModal/EditModal";
 import { motion } from "framer-motion";
-import dayjs from "dayjs";
-import { dateFormat, selectSegementedColor } from "./TaskModal/BaseModal";
+import { selectSegementedColor } from "./TaskModal/BaseModal";
 import { ITaskRequest } from "../types/ITaskRequest";
+import { dayjs } from "../config/dayJs";
 
 interface ITaskCardProps extends ITask {
   toggleTaskCompleted: (_id: string, completed: boolean) => void;
   loading: boolean;
   editTaskId: (values: ITaskRequest, _id: string, cb?: () => void) => void;
+  deleteTaskId: (_id: string) => void;
 }
 
 export default function TaskCard({
@@ -25,14 +26,27 @@ export default function TaskCard({
   toggleTaskCompleted,
   loading,
   editTaskId,
+  deleteTaskId,
 }: ITaskCardProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
-  let FormatedDeadline = dayjs(deadline, dateFormat).toString();
+  const FormatedDeadline = `${dayjs(deadline).fromNow()} ${dayjs(
+    deadline,
+  ).format("MMM-DD")} ${dayjs(deadline).format("HH:mm A")}`;
 
   function handleCompleteClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
     toggleTaskCompleted(_id, !completed);
+  }
+
+  function getDateTextColor(dateTime: string): string {
+    if (dayjs(dateTime).isBefore(dayjs())) {
+      return "red";
+    }
+    if (dayjs(dateTime).isToday()) {
+      return "yellow";
+    }
+    return "";
   }
 
   return (
@@ -43,6 +57,7 @@ export default function TaskCard({
         task={{ _id, title, description, priority, deadline, completed, user }}
         loading={loading}
         editTaskId={editTaskId}
+        deleteTaskId={deleteTaskId}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -64,7 +79,12 @@ export default function TaskCard({
             <div>
               <div className="flex items-center space-x-2">
                 <AiOutlineClockCircle />
-                <Text strikethrough={completed}>{FormatedDeadline}</Text>
+                <Text
+                  strikethrough={completed}
+                  color={getDateTextColor(deadline)}
+                >
+                  {FormatedDeadline}
+                </Text>
               </div>
               <Group position="apart" mt="md" mb="xs">
                 <Text strikethrough={completed} weight={500} size="xl">

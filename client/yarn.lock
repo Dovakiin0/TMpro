@@ -460,13 +460,6 @@
     clsx "1.1.1"
     csstype "3.0.9"
 
-"@mantine/tiptap@^6.0.20":
-  version "6.0.20"
-  resolved "https://registry.yarnpkg.com/@mantine/tiptap/-/tiptap-6.0.20.tgz#5173d79c662c51d0e6c823e7153dab3c989c3c48"
-  integrity sha512-/WbCsY0gHF0+olKS1ZCnDjDh+q2i3iSK1pS4t3WhGCXsQjiJkLGgpWRun8tWx6NWYnyP/e/EpWejlyjSCzO3Gg==
-  dependencies:
-    "@mantine/utils" "6.0.20"
-
 "@mantine/utils@6.0.20":
   version "6.0.20"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.20.tgz#c331040c62050edf3a513f3cfb702f3170597c10"
