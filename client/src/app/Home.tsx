@@ -1,10 +1,13 @@
-import { Button, Text } from "@mantine/core";
+import { ActionIcon, Button, Text } from "@mantine/core";
 import { BiTask } from "react-icons/bi";
 import TaskCard from "../components/TaskCard";
 import { ITask } from "../types/ITask";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDisclosure } from "@mantine/hooks";
 import AddModal from "../components/TaskModal/AddModal";
+import { useRef } from "react";
+import useOnScreen from "../hooks/useOnScreen";
+import { motion } from "framer-motion";
 
 type Props = {};
 
@@ -24,6 +27,8 @@ function Home({ }: Props) {
     .map((d, i) => ({ ...d, _id: d._id + i }));
 
   const [opened, { open, close }] = useDisclosure(false);
+  const createButtonRef = useRef<HTMLButtonElement | null>(null);
+  const isCreateButtonVisible = useOnScreen(createButtonRef);
 
   return (
     <>
@@ -35,7 +40,12 @@ function Home({ }: Props) {
             <Text>Tasks</Text>
           </div>
           <div>
-            <Button color="red" leftIcon={<AiOutlinePlus />} onClick={open}>
+            <Button
+              ref={createButtonRef}
+              color="red"
+              leftIcon={<AiOutlinePlus />}
+              onClick={open}
+            >
               Create New
             </Button>
           </div>
@@ -46,6 +56,19 @@ function Home({ }: Props) {
           ))}
         </div>
       </div>
+      {!isCreateButtonVisible && (
+        <motion.div className="fixed bottom-5 right-5">
+          <ActionIcon
+            color="red"
+            variant="filled"
+            radius="xl"
+            size="xl"
+            onClick={open}
+          >
+            <AiOutlinePlus size={30} />
+          </ActionIcon>
+        </motion.div>
+      )}
     </>
   );
 }

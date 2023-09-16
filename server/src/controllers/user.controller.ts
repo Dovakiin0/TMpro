@@ -14,6 +14,13 @@ const getAll = asyncHandler(async (req: IRequest, res: Response) => {
   res.status(200).json({ count: users.length, users });
 });
 
+const getMe = asyncHandler(async (req: IRequest, res: Response) => {
+  if (req.user) {
+    res.status(200).json(req.user);
+  }
+  res.status(401);
+});
+
 /* 
  @Desc Login 
  @Route /api/auth/
@@ -88,4 +95,9 @@ const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
     });
 });
 
-export { registerUser, login, getAll };
+const logout = asyncHandler(async (req: IRequest, res: Response) => {
+  res.cookie("access_token", "", { expires: new Date(0) });
+  res.status(200).json({ success: true, message: "Logged out successfully" });
+});
+
+export { registerUser, login, getAll, logout, getMe };

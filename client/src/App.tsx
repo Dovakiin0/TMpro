@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import Loader from "./components/Loader";
+import { Notifications } from "@mantine/notifications";
 
 const emotionCache = createEmotionCache({ key: "mantine", prepend: false });
 

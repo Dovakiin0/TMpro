@@ -10,7 +10,12 @@ const app: Express = express();
 const server: Server = http.createServer(app);
 
 // middlewares for the application
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms"),

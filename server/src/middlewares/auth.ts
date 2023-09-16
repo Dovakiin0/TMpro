@@ -8,22 +8,30 @@ export const isAuth = async (
   res: Response,
   next: NextFunction,
 ) => {
-  let token = req.cookies["access_token"];
-  const decoded = verifyJWT(token);
+  try {
+    let token = req.cookies["access_token"];
+    if (token === null || typeof token === "undefined") {
+      return;
+    }
 
-  if (!decoded.id) {
-    res.status(401);
-    throw new Error("Not Authorized");
+    const decoded = verifyJWT(token);
+
+    if (!decoded.id) {
+      res.status(401);
+      throw new Error("Not Authorized");
+    }
+
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) {
+      res.status(401);
+      throw new Error("Not Authorized");
+    }
+
+    req.user = user;
+
+    next();
+  } catch (err) {
+    next(err);
   }
-
-  const user = await User.findById(decoded.id).select("-password");
-
-  if (!user) {
-    res.status(401);
-    throw new Error("Not Authorized");
-  }
-
-  req.user = user;
-
-  next();
 };

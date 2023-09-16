@@ -12,7 +12,7 @@ FROM base as test
 #Stage 3 - Run Development
 FROM base as development
 EXPOSE 3030
-CMD ["yarn", , "dev"]
+CMD ["npm","run", "dev"]
 
 # Stage 3 - Build for production
 FROM base as production
