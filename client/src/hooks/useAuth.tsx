@@ -6,7 +6,6 @@ import { loginSuccess, logout } from "../store/reducer/authSlice";
 
 export default function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState();
   const [errors, setErrors] = useState();
   const dispatch = useAppDispatch();
 
@@ -30,7 +29,6 @@ export default function useAuth() {
       setLoading(true);
       const response = await client.post("/api/auth", credentials);
       if (response.status === 200) {
-        setData(response.data);
         dispatch(loginSuccess(response.data));
       }
     } catch (err: any) {
@@ -49,7 +47,6 @@ export default function useAuth() {
         password: userData.password,
       });
       if (response.status === 201) {
-        setData(response.data);
         dispatch(loginSuccess(response.data));
       }
     } catch (err: any) {
@@ -64,7 +61,6 @@ export default function useAuth() {
       setLoading(true);
       const response = await client.post("/api/auth/logout", {});
       if (response.status === 200) {
-        setData(response.data);
         dispatch(logout);
         window.location.reload();
       }
@@ -75,5 +71,5 @@ export default function useAuth() {
     }
   };
 
-  return { login, loading, data, errors, register, logoutUser };
+  return { login, loading, errors, register, logoutUser };
 }

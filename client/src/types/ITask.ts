@@ -7,3 +7,8 @@ export interface ITask {
   completed: boolean;
   user: string;
 }
+
+export interface ITaskResponse {
+  count: number;
+  tasks: ITask[];
+}

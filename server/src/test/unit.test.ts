@@ -24,7 +24,8 @@ describe("Unit Test", () => {
 
     it("Should verify the token and return the decoded token", () => {
       const decoded = verifyJWT(token);
-      expect(decoded.id).toBe("101");
+      expect(decoded).not.toBe(null);
+      expect(decoded?.id).toBe("101");
     });
   });
 

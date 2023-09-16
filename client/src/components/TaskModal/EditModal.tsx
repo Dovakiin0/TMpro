@@ -22,12 +22,16 @@ type Props = {
   opened: boolean;
   close: () => void;
   task: ITask;
+  loading: boolean;
+  editTaskId: (values: ITaskRequest, _id: string, cb?: () => void) => void;
 };
 
 function EditModal({
   opened,
   close,
-  task: { description, title, deadline, completed, priority },
+  task: { _id, description, title, deadline, completed, priority },
+  loading,
+  editTaskId,
 }: Props) {
   const [segmentColor, setSegmentColor] = useState(
     selectSegementedColor(priority),
@@ -48,8 +52,11 @@ function EditModal({
     setSegmentColor(selectSegementedColor(form.values.priority));
   }, [form.values]);
 
-  function handleSubmit(values: typeof form.values) {
+  function handleSubmit(values: ITaskRequest) {
     console.log(values);
+    editTaskId(values, _id, () => {
+      close();
+    });
   }
 
   return (
@@ -92,7 +99,7 @@ function EditModal({
           required
           {...form.getInputProps("deadline")}
         />
-        <Button type="submit" variant="outline" color="red">
+        <Button type="submit" variant="outline" color="red" loading={loading}>
           Save
         </Button>
       </form>

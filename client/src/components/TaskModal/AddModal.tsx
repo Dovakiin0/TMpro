@@ -19,8 +19,10 @@ import dayjs from "dayjs";
 type Props = {
   opened: boolean;
   close: () => void;
+  createNewTask: (values: ITaskCreateRequest, cb?: () => void) => void;
+  loading: boolean;
 };
-function AddModal({ opened, close }: Props) {
+function AddModal({ opened, close, createNewTask, loading }: Props) {
   const [segmentColor, setSegmentColor] = useState<string | null>();
 
   const form = useForm<ITaskCreateRequest>({
@@ -37,9 +39,10 @@ function AddModal({ opened, close }: Props) {
     setSegmentColor(selectSegementedColor(form.values.priority));
   }, [form.values]);
 
-  function handleSubmit(values: typeof form.values) {
-    console.log(values);
+  function handleSubmit(values: ITaskCreateRequest) {
+    createNewTask(values, () => close());
   }
+
   return (
     <BaseModal opened={opened} close={close} closeCb={() => form.reset()}>
       <form
@@ -73,7 +76,7 @@ function AddModal({ opened, close }: Props) {
           required
           {...form.getInputProps("deadline")}
         />
-        <Button type="submit" variant="outline" color="red">
+        <Button type="submit" variant="outline" color="red" loading={loading}>
           Save
         </Button>
       </form>

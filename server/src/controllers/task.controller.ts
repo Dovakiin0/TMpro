@@ -10,7 +10,7 @@ import mongoose from "mongoose";
  @Method GET
  */
 const getAllTasks = asyncHandler(async (req: IRequest, res: Response) => {
-  const tasks = await Task.find({ user: req.user });
+  const tasks = await Task.find({ user: req.user }).sort({ createdAt: -1 });
   res.status(200).json({ count: tasks.length, tasks });
 });
 
@@ -52,7 +52,7 @@ const createTask = asyncHandler(async (req: IRequest, res: Response) => {
 
   await task.save();
 
-  res.status(201).json(task);
+  res.status(201).json({ success: true, task });
 });
 
 /* 
@@ -67,9 +67,13 @@ const updateTask = asyncHandler(async (req: IRequest, res: Response) => {
     throw new Error("invalid Id");
   }
 
-  const task = await Task.findByIdAndUpdate(req.params.id, {
-    ...taskBody,
-  });
+  const task = await Task.findByIdAndUpdate(
+    req.params.id,
+    {
+      ...taskBody,
+    },
+    { new: true },
+  );
 
   if (!task) {
     res.status(400);
@@ -78,7 +82,7 @@ const updateTask = asyncHandler(async (req: IRequest, res: Response) => {
 
   await task.save();
 
-  res.status(200).json({ message: "success" });
+  res.status(200).json({ success: true, task });
 });
 
 /* 
@@ -97,7 +101,7 @@ const deleteTask = asyncHandler(async (req: IRequest, res: Response) => {
     throw new Error("Task Not found");
   }
 
-  res.status(200).json({ message: "success" });
+  res.status(200).json({ success: true });
 });
 
 export { getAllTasks, getTaskById, createTask, updateTask, deleteTask };

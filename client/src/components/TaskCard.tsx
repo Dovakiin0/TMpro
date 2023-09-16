@@ -4,6 +4,15 @@ import { useDisclosure } from "@mantine/hooks";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import EditModal from "./TaskModal/EditModal";
 import { motion } from "framer-motion";
+import dayjs from "dayjs";
+import { dateFormat, selectSegementedColor } from "./TaskModal/BaseModal";
+import { ITaskRequest } from "../types/ITaskRequest";
+
+interface ITaskCardProps extends ITask {
+  toggleTaskCompleted: (_id: string, completed: boolean) => void;
+  loading: boolean;
+  editTaskId: (values: ITaskRequest, _id: string, cb?: () => void) => void;
+}
 
 export default function TaskCard({
   _id,
@@ -13,11 +22,17 @@ export default function TaskCard({
   deadline,
   completed,
   user,
-}: ITask) {
+  toggleTaskCompleted,
+  loading,
+  editTaskId,
+}: ITaskCardProps) {
   const [opened, { open, close }] = useDisclosure(false);
+
+  let FormatedDeadline = dayjs(deadline, dateFormat).toString();
 
   function handleCompleteClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
+    toggleTaskCompleted(_id, !completed);
   }
 
   return (
@@ -26,6 +41,8 @@ export default function TaskCard({
         opened={opened}
         close={close}
         task={{ _id, title, description, priority, deadline, completed, user }}
+        loading={loading}
+        editTaskId={editTaskId}
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -37,25 +54,32 @@ export default function TaskCard({
           padding="lg"
           radius="md"
           withBorder
-          className={`hover:cursor-pointer h-[300px] `}
+          className={`hover:cursor-pointer h-[300px]`}
           onClick={open}
+          sx={{
+            opacity: completed ? 0.5 : 1,
+          }}
         >
           <div className="flex flex-col h-full justify-between">
             <div>
               <div className="flex items-center space-x-2">
                 <AiOutlineClockCircle />
-                <Text>{deadline}</Text>
+                <Text strikethrough={completed}>{FormatedDeadline}</Text>
               </div>
               <Group position="apart" mt="md" mb="xs">
-                <Text weight={500} size="xl">
+                <Text strikethrough={completed} weight={500} size="xl">
                   {title}
                 </Text>
-                <Badge color="pink" size="lg" variant="light">
+                <Badge
+                  color={selectSegementedColor(priority)}
+                  size="lg"
+                  variant="light"
+                >
                   {priority}
                 </Badge>
               </Group>
 
-              <Text size="md" color="dimmed">
+              <Text strikethrough={completed} size="md" color="dimmed">
                 {description}
               </Text>
             </div>
@@ -68,7 +92,7 @@ export default function TaskCard({
               radius="md"
               onClick={handleCompleteClick}
             >
-              {completed ? "Delete" : "Mark as Completed"}
+              {completed ? "Mark as Incomplete" : "Mark as Completed"}
             </Button>
           </div>
         </Card>

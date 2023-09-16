@@ -77,7 +77,7 @@ describe("Tasks", () => {
         deadline: "2023-09-29T00:00:00.000Z",
       });
     expect(response.statusCode).toBe(201);
-    expect(response.body).toHaveProperty("title");
+    expect(response.body).toHaveProperty("success");
   });
 
   it("PUT /api/tasks/:id - Should return 200 and update Task by ID", async () => {
@@ -88,7 +88,7 @@ describe("Tasks", () => {
         priority: "MEDIUM",
       });
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty("message");
+    expect(response.body).toHaveProperty("success");
   });
 
   it("DELETE /api/tasks/:id - Should return 200 and delete a task by ID", async () => {
@@ -96,6 +96,6 @@ describe("Tasks", () => {
       .delete(`/api/tasks/${task._id}`)
       .set("Cookie", [`access_token=${token}`]);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty("message");
+    expect(response.body).toHaveProperty("success");
   });
 });
