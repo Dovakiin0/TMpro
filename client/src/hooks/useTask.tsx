@@ -7,16 +7,16 @@ import {
   deleteTask,
   editTask,
   setTasks,
+  sortTasks,
 } from "../store/reducer/taskSlice";
 import useNotification from "./useNotification";
-
-type Props = {};
+import { ISort } from "../types/ITask";
 
 function useTask() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState();
   const dispatch = useAppDispatch();
-  const { tasks, count } = useAppSelector((state) => state.task);
+  const { filteredTasks, count } = useAppSelector((state) => state.task);
   const { Success } = useNotification();
 
   useEffect(() => {
@@ -102,6 +102,10 @@ function useTask() {
     }
   };
 
+  const sortTask = (value: ISort) => {
+    dispatch(sortTasks(value));
+  };
+
   return {
     loading,
     errors,
@@ -110,8 +114,9 @@ function useTask() {
     fetchTasks,
     deleteTaskId,
     toggleTaskCompleted,
-    tasks,
+    tasks: filteredTasks,
     count,
+    sortTask,
   };
 }
 

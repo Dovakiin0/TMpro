@@ -116,6 +116,7 @@ function EditModal({
           label="Description"
           required
           autosize
+          minRows={5}
           {...form.getInputProps("description")}
         />
         <SegmentedControl

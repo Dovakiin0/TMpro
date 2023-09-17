@@ -21,11 +21,12 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms"),
 );
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
-app.use(errorHandler);
+app.use(express.urlencoded({ extended: true }));
 
 // add all routes for the application
 InjectRoutes(app);
+// add Custom Error Handler middleware
+app.use(errorHandler);
 
 // exporting default server
 export default server;

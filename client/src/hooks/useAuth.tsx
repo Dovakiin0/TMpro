@@ -3,12 +3,14 @@ import { ILoginUser, IRegisterUser } from "../types/IUser";
 import { client } from "../config/client";
 import { useAppDispatch, useAppSelector } from "./useReducer";
 import { loginSuccess, logout } from "../store/reducer/authSlice";
+import useNotification from "./useNotification";
 
 export default function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState();
   const { current } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { Error } = useNotification();
 
   useEffect(() => {
     checkUser();
@@ -34,6 +36,7 @@ export default function useAuth() {
       }
     } catch (err: any) {
       setErrors(err);
+      Error({ message: err.response.data.message });
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,13 @@
 version: "3"
 services:
+  client:
+    container_name: "TMpro_client"
+    build:
+      context: ./client/
+    restart: always
+    ports:
+      - "5000:80"
+
   server:
     container_name: "TMpro_server"
     build:

@@ -10,11 +10,13 @@ import {
   Text,
   TextInput,
   Textarea,
+  Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ITaskCreateRequest } from "../../types/ITaskRequest";
 import { DateTimePicker } from "@mantine/dates";
 import dayjs from "dayjs";
+import { MdInfo } from "react-icons/md";
 
 type Props = {
   opened: boolean;
@@ -64,6 +66,8 @@ function AddModal({ opened, close, createNewTask, loading }: Props) {
         <Textarea
           withAsterisk
           label="Description"
+          autosize={true}
+          minRows={5}
           required
           {...form.getInputProps("description")}
         />
