@@ -40,19 +40,31 @@ function Home() {
         createNewTask={createNewTask}
       />
       <div className="flex w-full flex-col space-y-5">
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col space-y-3">
-            <div className="flex items-center space-x-3 text-3xl">
-              <BiTask className="text-gray-400" />
-              <Text>Tasks</Text>
+        <div className="flex w-full items-center justify-between">
+          <div className="flex w-full flex-col space-y-3">
+            <div className="flex w-full justify-between text-3xl">
+              <div className="flex items-center space-x-3">
+                <BiTask className="text-gray-400" />
+                <Text>Tasks</Text>
+              </div>
+              <div>
+                <Button
+                  ref={createButtonRef}
+                  color="red"
+                  leftIcon={<AiOutlinePlus />}
+                  onClick={open}
+                >
+                  Create New
+                </Button>
+              </div>
             </div>
-            <div className="flex space-x-3 items-center">
+            <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-3">
               <Text size="lg">Sort By:</Text>
               <Chip.Group
                 value={sort}
                 onChange={(val: ISort) => onSortChanged(val)}
               >
-                <Group position="center">
+                <Group>
                   <Chip value="CREATED" variant="filled" color="red">
                     Created At
                   </Chip>
@@ -77,16 +89,6 @@ function Home() {
                 </Group>
               </Chip.Group>
             </div>
-          </div>
-          <div>
-            <Button
-              ref={createButtonRef}
-              color="red"
-              leftIcon={<AiOutlinePlus />}
-              onClick={open}
-            >
-              Create New
-            </Button>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">

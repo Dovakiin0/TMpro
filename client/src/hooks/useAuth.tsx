@@ -16,6 +16,7 @@ export default function useAuth() {
     checkUser();
   }, []);
 
+  // Check if current user exists and is valid
   const checkUser = async () => {
     try {
       const response = await client.get("/api/auth/@me");
