@@ -13,6 +13,7 @@ const taskSlice = createSlice({
   reducers: {
     createTask: (state, { payload }: PayloadAction<ITask>) => {
       state.tasks = [payload, ...state.tasks];
+      state.filteredTasks = state.tasks;
     },
     setTasks: (state, action: PayloadAction<ITaskResponse>) => {
       // Filter completed tasks and incomplete tasks
@@ -40,6 +41,7 @@ const taskSlice = createSlice({
           state.tasks.push(completedTask[0]);
         }
       }
+      state.filteredTasks = state.tasks;
     },
     deleteTask: (state, action: PayloadAction<string>) => {
       const taskId = action.payload;
