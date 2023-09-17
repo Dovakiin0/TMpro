@@ -15,6 +15,6 @@ CMD ["npm","run", "dev"]
 
 # Production
 FROM base as production
-RUN npm run build
+RUN yarn run build
 CMD ["node", "dist/index.js"]
 
