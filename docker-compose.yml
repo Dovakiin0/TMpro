@@ -18,6 +18,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongo_db:27017/TMpro
       - JWT_TOKEN=verysecretkey
+      - PORT=5001
     depends_on:
       - mongo_db
 
