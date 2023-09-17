@@ -10,7 +10,8 @@ services:
       - "3030:3030"
     environment:
       - MONGO_URI=mongodb://mongo_db:27017/TMpro
-      - JWT_TOKEN=verysecretkey
+      - JWT_SECRET=verysecretkey
+      - NODE_ENV=development
     depends_on:
       - mongo_db
 

@@ -14,6 +14,11 @@ const getAll = asyncHandler(async (req: IRequest, res: Response) => {
   res.status(200).json({ count: users.length, users });
 });
 
+/* 
+ @Desc Get current logged in user
+ @Route /api/auth/@me
+ @Method GET
+ */
 const getMe = asyncHandler(async (req: IRequest, res: Response) => {
   res.status(200).json(req.user);
 });

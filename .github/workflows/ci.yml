@@ -1,11 +1,7 @@
-name: TMpro CD
+name: TMpro CI
 
 # Controls when the action will run.
 on:
-  workflow_run:
-    workflows: ["TMpro CI"]
-    types:
-      - "completed"
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [master]
@@ -28,4 +24,6 @@ jobs:
           port: 22
           script: |
             cd ~/TMpro
-            sh deploy.sh
+            git pull origin master
+            git status
+            sh run-test.sh
