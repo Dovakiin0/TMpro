@@ -17,6 +17,6 @@ CMD ["npm","run", "dev"]
 # Production
 FROM base as production
 RUN npm run build
-EXPOSE 3030
+EXPOSE 5001
 CMD ["node", "dist/index.js"]
 

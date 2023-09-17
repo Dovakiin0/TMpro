@@ -14,7 +14,7 @@ services:
       context: ./server/
     restart: always
     ports:
-      - "3030:3030"
+      - "5001:5001"
     environment:
       - MONGO_URI=mongodb://mongo_db:27017/TMpro
       - JWT_TOKEN=verysecretkey

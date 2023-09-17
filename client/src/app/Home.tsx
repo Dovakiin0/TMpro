@@ -51,7 +51,7 @@ function Home() {
       <div className="flex w-full flex-col space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex flex-col space-y-3">
-            <div className="flex items-center space-x-y text-3xl">
+            <div className="flex items-center space-x-3 text-3xl">
               <BiTask className="text-gray-400" />
               <Text>Tasks</Text>
             </div>
