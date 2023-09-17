@@ -17,7 +17,7 @@ services:
       - "5001:5001"
     environment:
       - MONGO_URI=mongodb://mongo_db:27017/TMpro
-      - JWT_TOKEN=verysecretkey
+      - JWT_SECRET=verysecretkey
       - PORT=5001
       - NODE_ENV=production
     depends_on:
