@@ -12,7 +12,7 @@ const server: Server = http.createServer(app);
 // middlewares for the application
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://tmpro.ryuo.tech"],
     credentials: true,
   }),
 );

@@ -63,8 +63,6 @@ function EditModal({
     });
   }
 
-  console.log(completed);
-
   return (
     <BaseModal opened={opened} close={close} closeCb={() => form.reset()}>
       <form

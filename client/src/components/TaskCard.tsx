@@ -23,6 +23,8 @@ export default function TaskCard({
   deadline,
   completed,
   user,
+  createdAt,
+  updatedAt,
   toggleTaskCompleted,
   loading,
   editTaskId,
@@ -60,7 +62,17 @@ export default function TaskCard({
       <EditModal
         opened={opened}
         close={close}
-        task={{ _id, title, description, priority, deadline, completed, user }}
+        task={{
+          _id,
+          title,
+          description,
+          priority,
+          deadline,
+          completed,
+          user,
+          createdAt,
+          updatedAt,
+        }}
         loading={loading}
         editTaskId={editTaskId}
         deleteTaskId={deleteTaskId}
