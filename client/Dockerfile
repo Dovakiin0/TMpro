@@ -6,5 +6,6 @@ RUN yarn
 COPY . .
 RUN yarn build
 
+# Serve the static build on nginx
 FROM nginx:1.25.2-alpine
 COPY --from=base /app/TMPro/client/dist /usr/share/nginx/html

@@ -1,5 +1,6 @@
 import { RefObject, useState, useMemo, useEffect } from "react";
 
+// custom hook to check if an element in the document is visible on screen
 export default function useOnScreen(ref: RefObject<HTMLElement>) {
   const [isIntersecting, setIntersecting] = useState(false);
 

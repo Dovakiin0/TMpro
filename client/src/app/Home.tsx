@@ -1,12 +1,4 @@
-import {
-  ActionIcon,
-  Button,
-  Text,
-  Card,
-  Chip,
-  Group,
-  Divider,
-} from "@mantine/core";
+import { ActionIcon, Button, Text, Card, Chip, Group } from "@mantine/core";
 import { BiTask } from "react-icons/bi";
 import TaskCard from "../components/TaskCard";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -18,7 +10,6 @@ import { motion } from "framer-motion";
 import useTask from "../hooks/useTask";
 import { TbMoodEmpty } from "react-icons/tb";
 import { ISort } from "../types/ITask";
-import { MdRefresh } from "react-icons/md";
 
 function Home() {
   const [opened, { open, close }] = useDisclosure(false);

@@ -8,13 +8,16 @@ docker compose -f docker-compose-test.yml up --build -d
 sleep 10
 
 # Check if any tests failed
-docker logs TMpro_server | grep "Test failed"
+docker logs TMpro_server_test | grep "Test failed"
 
 # Get the exit code of the test container
-EXIT_CODE=$(docker wait TMpro_server)
+EXIT_CODE=$(docker wait TMpro_server_test)
 
 # Shut down the Docker Compose environment
 docker compose -f docker-compose-test.yml down
+
+# Prune any dangling image
+docker image prune -f
 
 # Exit with an error code if any tests failed
 if [ "$EXIT_CODE" -ne 0 ]; then

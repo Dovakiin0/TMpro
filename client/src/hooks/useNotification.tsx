@@ -6,6 +6,7 @@ interface INotification {
   loading?: boolean;
 }
 
+// custom hook that wraps around default notification from mantine
 function useNotification() {
   const Success = ({ message, loading = false }: INotification) => {
     notifications.show({

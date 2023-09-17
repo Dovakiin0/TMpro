@@ -55,6 +55,7 @@ export default function useAuth() {
       }
     } catch (err: any) {
       setErrors(err);
+      Error({ message: err.response.data.message });
     } finally {
       setLoading(false);
     }

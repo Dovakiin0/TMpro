@@ -15,10 +15,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    // Stores the information of current user in state
     loginSuccess: (state, { payload }: PayloadAction<IUserResponse>) => {
       state.current = payload;
       state.authenticated = true;
     },
+    // Reset the state to original
     logout: (state) => {
       state.authenticated = false;
       state.current = null;

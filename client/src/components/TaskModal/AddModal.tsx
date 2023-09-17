@@ -10,13 +10,11 @@ import {
   Text,
   TextInput,
   Textarea,
-  Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ITaskCreateRequest } from "../../types/ITaskRequest";
 import { DateTimePicker } from "@mantine/dates";
 import dayjs from "dayjs";
-import { MdInfo } from "react-icons/md";
 
 type Props = {
   opened: boolean;

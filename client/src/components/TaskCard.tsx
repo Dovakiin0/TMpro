@@ -32,6 +32,7 @@ export default function TaskCard({
 }: ITaskCardProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
+  // Store deadline date in a proper format
   const FormatedDeadline = `${dayjs(deadline).fromNow()} ${dayjs(
     deadline,
   ).format("MMM-DD")} ${dayjs(deadline).format("HH:mm A")}`;
@@ -41,6 +42,7 @@ export default function TaskCard({
     toggleTaskCompleted(_id, !completed);
   }
 
+  // Function to get Color based on state of deadline
   function getDateTextColor(dateTime: string): string {
     if (completed) {
       return "dimmed";

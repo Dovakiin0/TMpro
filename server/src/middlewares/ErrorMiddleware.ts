@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from "express";
 
 export const errorHandler = (
   err: any,
-  req: Request,
+  _: Request,
   res: Response,
-  next: NextFunction,
+  _: NextFunction,
 ) => {
   const statusCode = res.statusCode ? res.statusCode : 500;
   res.status(statusCode);

@@ -1,7 +1,7 @@
 version: "3"
 services:
   server:
-    container_name: "TMpro_server"
+    container_name: "TMpro_server_test"
     build:
       context: ./server/
       target: test
@@ -16,7 +16,7 @@ services:
     command: ["yarn", "test"]
 
   mongo_db:
-    container_name: "TMpro_db"
+    container_name: "TMpro_db_test"
     image: mongodb/mongodb-community-server
     restart: always
     ports:

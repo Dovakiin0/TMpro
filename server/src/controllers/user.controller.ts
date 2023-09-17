@@ -71,6 +71,12 @@ const login = asyncHandler(
 const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
   const { email, username, password } = req.body;
 
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    res.status(409);
+    throw new Error("User already exists");
+  }
+
   const user = new User({
     email,
     username,
