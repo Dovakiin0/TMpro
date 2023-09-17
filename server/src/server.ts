@@ -9,10 +9,23 @@ import cookieParser from "cookie-parser";
 const app: Express = express();
 const server: Server = http.createServer(app);
 
+const allowedOrigins = ["http://localhost:5173", "https://tmpro.ryuo.tech"];
+
 // middlewares for the application
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://tmpro.ryuo.tech"],
+    origin: function (origin, callback) {
+      if (!origin) return;
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(
+          new Error(
+            "The CORS policy for this site does not allow access from the specified Origin",
+          ),
+          false,
+        );
+      }
+      return callback(null, true);
+    },
     credentials: true,
   }),
 );
