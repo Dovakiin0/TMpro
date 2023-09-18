@@ -1,15 +1,17 @@
-import type { NextFunction, Response } from "express";
+import type { Response } from "express";
 import User from "../models/User";
 import asyncHandler from "express-async-handler";
 import { generateJWT } from "../helper/jwt";
 import { IRequest } from "../types/IRequest";
+import { generateOTP } from "../helper/util";
+import { sendEmail } from "../helper/mailer";
 
 /* 
  @Desc Get all users
  @Route /api/auth
  @Method GET
  */
-const getAll = asyncHandler(async (req: IRequest, res: Response) => {
+const getAll = asyncHandler(async (_: IRequest, res: Response) => {
   const users = await User.find({}).select("-password");
   res.status(200).json({ count: users.length, users });
 });
@@ -28,40 +30,43 @@ const getMe = asyncHandler(async (req: IRequest, res: Response) => {
  @Route /api/auth/
  @Method POST
  */
-const login = asyncHandler(
-  async (req: IRequest, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+const login = asyncHandler(async (req: IRequest, res: Response) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
 
-    if (!user) {
-      res.status(401);
-      throw new Error("Email or password is incorrect");
-    }
+  if (!user) {
+    res.status(401);
+    throw new Error("Email or password is incorrect");
+  }
 
-    if (await user.comparePassword(password)) {
-      const expireDate = 7 * 24 * 60 * 60 * 1000; // 7 days
+  if (!user.isVerified) {
+    res.status(400);
+    throw new Error("Please verify your email");
+  }
 
-      res
-        .status(200)
-        .cookie("access_token", generateJWT(user._id), {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          expires: new Date(Date.now() + expireDate),
-        })
-        .json({
-          success: true,
-          user: {
-            id: user._id,
-            email: user.email,
-            username: user.username,
-          },
-        });
-    } else {
-      res.status(401);
-      throw new Error("Email or password incorrect");
-    }
-  },
-);
+  if (await user.comparePassword(password)) {
+    const expireDate = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+    res
+      .status(200)
+      .cookie("access_token", generateJWT(user._id), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        expires: new Date(Date.now() + expireDate),
+      })
+      .json({
+        success: true,
+        user: {
+          id: user._id,
+          email: user.email,
+          username: user.username,
+        },
+      });
+  } else {
+    res.status(401);
+    throw new Error("Email or password incorrect");
+  }
+});
 
 /* 
   @Desc Register new User
@@ -85,27 +90,103 @@ const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
 
   await user.save();
 
-  const expireDate = 7 * 24 * 60 * 60 * 1000; // 7 days
-
-  res
-    .status(201)
-    .cookie("access_token", generateJWT(user._id), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      expires: new Date(Date.now() + expireDate),
-    })
-    .json({
-      success: true,
-      user: {
-        email: user.email,
-        fullName: user.username,
-      },
-    });
+  res.status(201).json({
+    success: true,
+    user: {
+      _id: user._id,
+    },
+  });
 });
 
+/* 
+  @Desc Generates new otp for the user
+  @Route /api/auth/otp
+  @Method POST
+*/
+const generateOtpForUser = asyncHandler(
+  async (req: IRequest, res: Response) => {
+    const { id } = req.body;
+
+    const user = await User.findById({ id });
+    if (!user) {
+      res.status(400);
+      throw new Error("User does not exists");
+    }
+
+    const otpExpirationTimeStamp = new Date();
+    otpExpirationTimeStamp.setMinutes(otpExpirationTimeStamp.getMinutes() + 15); // 15 minutes
+
+    const generatedOTP = generateOTP(); // generate a new OTP
+
+    user.otp = generatedOTP;
+    user.otpExpiration = otpExpirationTimeStamp;
+
+    await user.save();
+
+    // send OTP to the user email address
+    sendEmail({
+      to: user.email,
+      subject: "Verification Code",
+      template: "main",
+      context: {
+        username: user.username,
+        otp: generatedOTP.toString(),
+      },
+    });
+
+    res.status(400).json({
+      success: true,
+      message: "OTP has been sent to your email address",
+    });
+  },
+);
+
+/* 
+  @Desc Gets OTP to verify user account
+  @Route /api/auth/otp/verify
+  @Method POST
+*/
+const verifyOTP = asyncHandler(async (req: IRequest, res: Response) => {
+  const { otp, id } = req.body;
+  const user = await User.findById({ id });
+
+  if (!user || !user.otp || !user.otpExpiration) {
+    res.status(400);
+    throw new Error("User does not exists"); // User not found or OTP information missing
+  }
+
+  const currentTimeStamp = new Date();
+
+  if (user.otp !== otp && currentTimeStamp > user.otpExpiration) {
+    res.status(400);
+    throw new Error("Your otp has been expired");
+  }
+
+  user.isVerified = true;
+  user.otp = null;
+  user.otpExpiration = null;
+
+  res
+    .status(200)
+    .json({ success: true, message: "Account verified, Please login!" });
+});
+
+/* 
+  @Desc Clears the cookie and logs out the user
+  @Route /api/auth/logout
+  @Method POST
+*/
 const logout = asyncHandler(async (req: IRequest, res: Response) => {
   res.clearCookie("access_token");
   res.status(200).json({ success: true, message: "Logged out successfully" });
 });
 
-export { registerUser, login, getAll, logout, getMe };
+export {
+  registerUser,
+  login,
+  getAll,
+  logout,
+  getMe,
+  verifyOTP,
+  generateOtpForUser,
+};

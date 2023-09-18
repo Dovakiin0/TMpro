@@ -5,6 +5,7 @@ import {
   hashPassword,
   verifyJWT,
 } from "../helper/jwt";
+import { generateOTP } from "../helper/util";
 
 describe("Unit Test", () => {
   let password: string = "HelloWorld";
@@ -38,6 +39,14 @@ describe("Unit Test", () => {
     it("Should return compare password with hashedPassword and return boolean", () => {
       const compare = comparePwd(password, hashedPassword);
       expect(typeof compare).toBe("boolean");
+    });
+  });
+
+  describe("Generate OTP", () => {
+    it("Should generate 6 digit number", () => {
+      let otp = generateOTP();
+      expect(typeof otp).toBe("number");
+      expect(otp.toString().length).toBe(6);
     });
   });
 });
