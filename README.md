@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-- [Introduction]("#introduction")
-- [About]("#about")
-- [Installation]("#installation")
-  - [Prerequisites]("#prerequisites")
-  - [Docker]("#docker")
-  - [Manual]("#manual")
-- [Production]("#production")
-- [Testing]("#testing")
+- [Introduction]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#introduction")
+- [About]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#about")
+- [Installation]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#installation")
+  - [Prerequisites]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#prerequisites")
+  - [Docker]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#docker")
+  - [Manual]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#manual")
+- [Production]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#production")
+- [Testing]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#testing")
 
 ## Introduction
 
