@@ -94,6 +94,7 @@ const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
     success: true,
     user: {
       _id: user._id,
+      email: user.email,
     },
   });
 });
@@ -105,9 +106,9 @@ const registerUser = asyncHandler(async (req: IRequest, res: Response) => {
 */
 const generateOtpForUser = asyncHandler(
   async (req: IRequest, res: Response) => {
-    const { id } = req.body;
+    const { email } = req.body;
 
-    const user = await User.findById({ id });
+    const user = await User.findOne({ email });
     if (!user) {
       res.status(400);
       throw new Error("User does not exists");
@@ -134,7 +135,7 @@ const generateOtpForUser = asyncHandler(
       },
     });
 
-    res.status(400).json({
+    res.status(200).json({
       success: true,
       message: "OTP has been sent to your email address",
     });
@@ -147,8 +148,8 @@ const generateOtpForUser = asyncHandler(
   @Method POST
 */
 const verifyOTP = asyncHandler(async (req: IRequest, res: Response) => {
-  const { otp, id } = req.body;
-  const user = await User.findById({ id });
+  const { otp, email } = req.body;
+  const user = await User.findOne({ email });
 
   if (!user || !user.otp || !user.otpExpiration) {
     res.status(400);
@@ -165,6 +166,8 @@ const verifyOTP = asyncHandler(async (req: IRequest, res: Response) => {
   user.isVerified = true;
   user.otp = null;
   user.otpExpiration = null;
+
+  await user.save();
 
   res
     .status(200)

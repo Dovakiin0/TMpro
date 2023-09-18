@@ -10,9 +10,14 @@ export const isAuth = async (
 ) => {
   try {
     let token = req.cookies["access_token"];
+    if (typeof token === "undefined") {
+      next();
+      return;
+    }
     const decoded = verifyJWT(token);
 
     if (decoded === null) {
+      next();
       return;
     }
 

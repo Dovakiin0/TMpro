@@ -10,7 +10,7 @@ export default function useAuth() {
   const [errors, setErrors] = useState();
   const { current } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { Error } = useToast();
+  const { Error, Success } = useToast();
 
   useEffect(() => {
     checkUser();
@@ -33,7 +33,7 @@ export default function useAuth() {
       setLoading(true);
       const response = await client.post("/api/auth", credentials);
       if (response.status === 200) {
-        dispatch(loginSuccess(response.data));
+        dispatch(loginSuccess(response.data.user));
       }
     } catch (err: any) {
       setErrors(err);
@@ -43,7 +43,7 @@ export default function useAuth() {
     }
   };
 
-  const register = async (userData: IRegisterUser) => {
+  const register = async (userData: IRegisterUser, cb?: () => void) => {
     try {
       setLoading(true);
       const response = await client.post("/api/auth/register", {
@@ -52,13 +52,45 @@ export default function useAuth() {
         password: userData.password,
       });
       if (response.status === 201) {
-        dispatch(loginSuccess(response.data));
+        await generateOTP(response.data.user.email);
+        cb?.();
       }
     } catch (err: any) {
       setErrors(err);
       Error({ message: err.response.data.message });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const generateOTP = async (email: string) => {
+    try {
+      const response = await client.post("/api/auth/otp", { email });
+      if (response.status === 200) {
+        Success({
+          message: response.data.message,
+        });
+      }
+    } catch (err: any) {
+      Error({ message: err.response.data.message });
+    }
+  };
+
+  const verifyOTP = async (email: string, otp: number, cb: () => void) => {
+    try {
+      setLoading(true);
+      const response = await client.post("/api/auth/otp/verify", {
+        email,
+        otp,
+      });
+      if (response.status === 200) {
+        Success({
+          message: response.data.message,
+        });
+        cb();
+      }
+    } catch (err: any) {
+      Error({ message: err.response.data.message });
     }
   };
 
@@ -77,5 +109,14 @@ export default function useAuth() {
     }
   };
 
-  return { login, loading, errors, register, logoutUser, current };
+  return {
+    login,
+    loading,
+    errors,
+    register,
+    logoutUser,
+    current,
+    verifyOTP,
+    generateOTP,
+  };
 }

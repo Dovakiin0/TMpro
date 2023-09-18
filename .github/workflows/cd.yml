@@ -30,4 +30,5 @@ jobs:
             cd ~/TMpro
             git pull origin master
             git status
+            echo "$(cat ${{secrets.ENV_PROD}})" > .env.production
             sh deploy.sh

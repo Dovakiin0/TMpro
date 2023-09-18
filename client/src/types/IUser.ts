@@ -21,3 +21,7 @@ export interface IUserResponse {
   email: string;
   username: string;
 }
+
+export interface IVerifyOtp {
+  otp: number;
+}

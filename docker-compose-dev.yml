@@ -12,6 +12,9 @@ services:
       - MONGO_URI=mongodb://mongo_db:27017/TMpro
       - JWT_SECRET=verysecretkey
       - NODE_ENV=development
+      - EMAIL_HOST=smtp.ethereal.email
+      - EMAIL_PASS=TKJ64DySyD75dVnncu
+      - EMAIL_USER=mathew.terry98@ethereal.email
     depends_on:
       - mongo_db
 

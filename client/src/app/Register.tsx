@@ -102,7 +102,9 @@ function Register({ }: Props) {
       form.setErrors({ password: "Please enter a strong password" });
       return;
     }
-    register(values);
+    register(values, () => {
+      navigate(`/verify`, { state: { email: values.email } });
+    });
   };
 
   useEffect(() => {
@@ -149,11 +151,13 @@ function Register({ }: Props) {
             <TextInput
               withAsterisk
               label="Username"
+              placeholder="Your Usernam"
               {...form.getInputProps("username")}
             />
             <TextInput
               withAsterisk
               label="Email"
+              placeholder="Your email address"
               {...form.getInputProps("email")}
             />
             <Popover
@@ -187,6 +191,7 @@ function Register({ }: Props) {
             <PasswordInput
               withAsterisk
               label="Confirm Password"
+              placeholder="Confirm Password"
               {...form.getInputProps("confirm_password")}
             />
             <Button type="submit" color="red" loading={loading}>

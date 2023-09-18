@@ -15,11 +15,8 @@ services:
     restart: always
     ports:
       - "5001:5001"
-    environment:
-      - MONGO_URI=mongodb://mongo_db:27017/TMpro
-      - JWT_SECRET=verysecretkey
-      - PORT=5001
-      - NODE_ENV=production
+    env_file:
+      - .env.production
     depends_on:
       - mongo_db
 
