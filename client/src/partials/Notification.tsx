@@ -7,8 +7,6 @@ import useNotification from "../hooks/useNotification";
 function Notification() {
   const { notifications, count, markNotificationAsRead } = useNotification();
 
-  const handleClick;
-
   return (
     <Menu
       shadow="md"
@@ -47,7 +45,6 @@ function Notification() {
                 title={notification.task?.title}
                 message={notification?.message}
                 markNotificationAsRead={markNotificationAsRead}
-                handleClick={handleClick}
               />
             </Menu.Item>
           ))}

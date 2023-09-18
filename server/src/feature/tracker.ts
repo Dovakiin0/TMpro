@@ -69,7 +69,6 @@ export async function saveNotification(
   thirtyMinutesTasks: ITask[],
   tenMinutesTasks: ITask[],
 ) {
-  console.log({ oneHourTasks, thirtyMinutesTasks, tenMinutesTasks });
   for (const task of oneHourTasks) {
     let message = "Due in 1 hour";
     task.OneHourDue = true;
