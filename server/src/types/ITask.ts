@@ -13,4 +13,8 @@ export interface ITask extends mongoose.Document {
   deadline: Date;
   completed: boolean;
   user: mongoose.Types.ObjectId;
+  todayDue: boolean;
+  OneHourDue: boolean;
+  thirtyMDue: boolean;
+  tenMDue: boolean;
 }

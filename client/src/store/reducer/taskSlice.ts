@@ -64,7 +64,7 @@ const taskSlice = createSlice({
       switch (sortType) {
         case "CREATED":
           // sort by created Date
-          sortedTasks.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+          sortedTasks.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
           break;
         case "HIGH":
           // Filter tasks with 'HIGH' priority

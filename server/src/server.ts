@@ -5,11 +5,14 @@ import morgan from "morgan";
 import cors from "cors";
 import { errorHandler } from "./middlewares/ErrorMiddleware";
 import cookieParser from "cookie-parser";
+import EventEmitter from "events";
 
 const app: Express = express();
 const server: Server = http.createServer(app);
 
 const allowedOrigins = ["http://localhost:5173", "https://tmpro.ryuo.tech"];
+
+export const eventEmitter = new EventEmitter();
 
 // middlewares for the application
 app.use(

@@ -11,7 +11,12 @@ function UserAvatar({ }: Props) {
     <>
       <Menu position="bottom-end" withArrow shadow="md" width={200}>
         <Menu.Target>
-          <Avatar radius="xl" className="hover:cursor-pointer">
+          <Avatar
+            radius="xl"
+            size="md"
+            color="red"
+            className="hover:cursor-pointer"
+          >
             {current !== null && current?.username?.[0].toUpperCase()}
           </Avatar>
         </Menu.Target>

@@ -3,18 +3,18 @@ import { ILoginUser, IRegisterUser } from "../types/IUser";
 import { client } from "../config/client";
 import { useAppDispatch, useAppSelector } from "./useReducer";
 import { loginSuccess, logout } from "../store/reducer/authSlice";
-import useNotification from "./useNotification";
+import useToast from "./useToast";
 
 export default function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState();
   const { current } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { Error } = useNotification();
+  const { Error } = useToast();
 
   useEffect(() => {
     checkUser();
-  }, []);
+  }, [current]);
 
   // Check if current user exists and is valid
   const checkUser = async () => {

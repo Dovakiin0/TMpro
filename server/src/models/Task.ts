@@ -9,6 +9,9 @@ const TaskScheme = new mongoose.Schema(
     deadline: { type: Date, required: true },
     completed: { type: Boolean, required: true },
     user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    OneHourDue: { type: Boolean, default: false },
+    thirtyMDue: { type: Boolean, default: false },
+    tenMDue: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

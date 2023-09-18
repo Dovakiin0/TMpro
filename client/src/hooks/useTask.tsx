@@ -9,7 +9,7 @@ import {
   setTasks,
   sortTasks,
 } from "../store/reducer/taskSlice";
-import useNotification from "./useNotification";
+import useToast from "./useToast";
 import { ISort } from "../types/ITask";
 
 function useTask() {
@@ -17,7 +17,7 @@ function useTask() {
   const [errors, setErrors] = useState();
   const dispatch = useAppDispatch();
   const { filteredTasks, count } = useAppSelector((state) => state.task);
-  const { Success } = useNotification();
+  const { Success } = useToast();
 
   useEffect(() => {
     fetchTasks();

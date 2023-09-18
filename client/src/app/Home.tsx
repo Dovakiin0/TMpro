@@ -84,7 +84,7 @@ function Home() {
                     Today
                   </Chip>
                   <Chip value="FUTURE" variant="filled" color="red">
-                    Future
+                    Upcoming
                   </Chip>
                 </Group>
               </Chip.Group>
