@@ -31,6 +31,6 @@ jobs:
             git pull origin master
             git status
             cat <<EOF > .env.production
-            $ENV_PROD
+            ${{secrets.ENV_PROD}}
             EOF
             sh deploy.sh
