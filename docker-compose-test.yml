@@ -13,7 +13,7 @@ services:
       - NODE_ENV=test
     depends_on:
       - mongo_db
-    command: ["yarn", "test"]
+    command: [ "yarn", "test" ]
 
   mongo_db:
     container_name: "TMpro_db_test"

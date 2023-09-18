@@ -17,6 +17,19 @@ const taskSlice = createSlice({
       state.filteredTasks = state.tasks;
     },
 
+    // searches task by search Query whether it is title or description
+    search: (state, { payload }: PayloadAction<string>) => {
+      // check if search query is empty and set the original tasks
+      if (payload === "") {
+        state.filteredTasks = state.tasks;
+        return;
+      }
+      state.filteredTasks = state.tasks.filter(
+        (task) =>
+          task.title.includes(payload) || task.description.includes(payload),
+      );
+    },
+
     // Sets all fetched tasks to the state
     setTasks: (state, action: PayloadAction<ITaskResponse>) => {
       // Filter completed tasks and incomplete tasks
@@ -126,7 +139,7 @@ const taskSlice = createSlice({
   },
 });
 
-export const { createTask, setTasks, editTask, deleteTask, sortTasks } =
+export const { createTask, setTasks, editTask, deleteTask, sortTasks, search } =
   taskSlice.actions;
 
 export default taskSlice.reducer;

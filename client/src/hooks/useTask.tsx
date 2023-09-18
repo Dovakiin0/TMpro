@@ -8,6 +8,7 @@ import {
   editTask,
   setTasks,
   sortTasks,
+  search,
 } from "../store/reducer/taskSlice";
 import useToast from "./useToast";
 import { ISort } from "../types/ITask";
@@ -37,6 +38,10 @@ function useTask() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const searchTask = (searchText: string) => {
+    dispatch(search(searchText));
   };
 
   const editTaskId = async (
@@ -117,6 +122,7 @@ function useTask() {
     tasks: filteredTasks,
     count,
     sortTask,
+    searchTask,
   };
 }
 

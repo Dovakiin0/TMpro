@@ -1,4 +1,12 @@
-import { ActionIcon, Button, Text, Card, Chip, Group } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Text,
+  Card,
+  Chip,
+  Group,
+  TextInput,
+} from "@mantine/core";
 import { BiTask } from "react-icons/bi";
 import TaskCard from "../components/TaskCard";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -10,6 +18,7 @@ import { motion } from "framer-motion";
 import useTask from "../hooks/useTask";
 import { TbMoodEmpty } from "react-icons/tb";
 import { ISort } from "../types/ITask";
+import { IconSearch } from "@tabler/icons-react";
 
 function Home() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -24,11 +33,16 @@ function Home() {
     editTaskId,
     deleteTaskId,
     sortTask,
+    searchTask,
   } = useTask();
 
   const onSortChanged = (sortValue: ISort) => {
     setSort(sortValue);
     sortTask(sortValue);
+  };
+
+  const onTaskSearch = (searchText: string) => {
+    searchTask(searchText);
   };
 
   return (
@@ -47,7 +61,17 @@ function Home() {
                 <BiTask className="text-gray-400" />
                 <Text>Tasks</Text>
               </div>
-              <div>
+              <div className="flex items-center space-x-2">
+                <div className="hidden lg:block">
+                  <TextInput
+                    placeholder="Search Task"
+                    icon={<IconSearch size={20} />}
+                    onChange={(event) => onTaskSearch(event.target.value)}
+                    sx={{
+                      width: "400px",
+                    }}
+                  />
+                </div>
                 <Button
                   ref={createButtonRef}
                   color="red"
@@ -57,6 +81,13 @@ function Home() {
                   Create New
                 </Button>
               </div>
+            </div>
+            <div className="lg:hidden">
+              <TextInput
+                placeholder="Search Task"
+                icon={<IconSearch size={20} />}
+                onChange={(event) => onTaskSearch(event.target.value)}
+              />
             </div>
             <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-3">
               <Text size="lg">Sort By:</Text>

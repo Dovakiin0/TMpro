@@ -20,7 +20,7 @@ export default function TMLayout() {
       asideOffsetBreakpoint="sm"
       header={<Header />}
     >
-      <div className="m-5">
+      <div className="m-2 lg:m-5">
         <Outlet />
       </div>
     </AppShell>
