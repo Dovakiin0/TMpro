@@ -14,7 +14,7 @@ export default function useAuth() {
 
   useEffect(() => {
     checkUser();
-  }, [current]);
+  }, []);
 
   // Check if current user exists and is valid
   const checkUser = async () => {

@@ -23,7 +23,6 @@ function UserAvatar({ }: Props) {
 
         <Menu.Dropdown>
           <Menu.Label>Logged in as: {current?.username}</Menu.Label>
-          <Menu.Item icon={<MdSettings size={14} />}>Settings</Menu.Item>
           <Menu.Item
             color="red"
             icon={<MdPowerSettingsNew size={14} />}

@@ -5,7 +5,9 @@ import NotificationItem from "../components/NotificationItem";
 import useNotification from "../hooks/useNotification";
 
 function Notification() {
-  const { notifications, count } = useNotification();
+  const { notifications, count, markNotificationAsRead } = useNotification();
+
+  const handleClick;
 
   return (
     <Menu
@@ -41,8 +43,11 @@ function Notification() {
           {notifications.map((notification, i) => (
             <Menu.Item key={i}>
               <NotificationItem
+                id={notification._id}
                 title={notification.task?.title}
                 message={notification?.message}
+                markNotificationAsRead={markNotificationAsRead}
+                handleClick={handleClick}
               />
             </Menu.Item>
           ))}

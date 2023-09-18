@@ -1,13 +1,20 @@
-import { Text } from "@mantine/core";
+import { ActionIcon, Button, Text } from "@mantine/core";
 import React from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineClockCircle, AiOutlineEye } from "react-icons/ai";
 
 type Props = {
+  id: string;
   title: string;
   message: string;
+  markNotificationAsRead: (_id: string) => void;
 };
 
-function NotificationItem({ title, message }: Props) {
+function NotificationItem({
+  id,
+  title,
+  message,
+  markNotificationAsRead,
+}: Props) {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between">
@@ -17,6 +24,14 @@ function NotificationItem({ title, message }: Props) {
         <AiOutlineClockCircle />
       </div>
       <Text>{message}</Text>
+      <Button
+        variant="subtle"
+        color="red"
+        leftIcon={<AiOutlineEye />}
+        onClick={() => markNotificationAsRead(id)}
+      >
+        Mark as Seen
+      </Button>
     </div>
   );
 }
