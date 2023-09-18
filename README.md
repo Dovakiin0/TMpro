@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-- [Introduction]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#introduction")
-- [About]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#about")
-- [Installation]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#installation")
-  - [Prerequisites]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#prerequisites")
-  - [Docker]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#docker")
-  - [Manual]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#manual")
-- [Production]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#production")
-- [Testing]("https://github.com/Dovakiin0/TMpro/edit/master/README.md#testing")
+- [Introduction](#introduction)
+- [About](#about)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Docker](#docker)
+  - [Manual](#manual)
+- [Production](#production)
+- [Testing](#testing)
 
 ## Introduction
 
@@ -30,7 +30,7 @@ TMpro is developed with Nodejs and Reactjs. The technologies used are:
 ### Prerequisites
 
 Before proceeding, make sure you have **Nodejs** and **mongoDB** installed in your local machine. (You can use Mongo atlas if you prefer).  
-Head over to `server/` directory and open `.env.example` file and fill in the details. Then rename the file to `.env`. You can use [Ethereal]("https://ethereal.email/") for dummy email.
+Head over to `server/` directory and open `.env.example` file and fill in the details. Then rename the file to `.env`. You can use [Ethereal](https://ethereal.email) for dummy email.
 
 ### Docker
 
