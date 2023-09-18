@@ -12,6 +12,7 @@ describe("User", () => {
       email: "test@test.com",
       password: "newTest123",
       username: "Jest",
+      isVerified: true,
     });
     await user.save();
   });

@@ -13,7 +13,7 @@ services:
       - NODE_ENV=test
     depends_on:
       - mongo_db
-    command: [ "yarn", "test" ]
+    command: [ "npm", "test" ]
 
   mongo_db:
     container_name: "TMpro_db_test"
@@ -21,8 +21,3 @@ services:
     restart: always
     ports:
       - "27017:27017"
-    volumes:
-      - db-test-data:/data/db
-
-volumes:
-  db-test-data:

@@ -2,8 +2,8 @@
 # Base Image
 FROM node:18-alpine as base
 WORKDIR /app/TMPro/server
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
 
 # TEST
@@ -15,6 +15,6 @@ CMD ["npm","run", "dev"]
 
 # Production
 FROM base as production
-RUN yarn run build
+RUN npm run build
 CMD ["node", "dist/index.js"]
 

@@ -33,7 +33,9 @@ async function getAll(req: IRequest, res: Response) {
   const notifications = await TaskNotification.find({
     userId: req.user!._id,
     isRead: false,
-  }).populate("task");
+  })
+    .populate("task")
+    .sort({ createdAt: -1 });
   res.status(200).json(notifications);
 }
 

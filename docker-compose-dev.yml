@@ -1,5 +1,14 @@
 version: "3"
 services:
+  client:
+    container_name: "TMpro_client_dev"
+    build:
+      context: ./client/
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "3000:80"
+
   server:
     container_name: "TMpro_server_dev"
     build:
@@ -10,11 +19,8 @@ services:
       - "3030:3030"
     environment:
       - MONGO_URI=mongodb://mongo_db:27017/TMpro
-      - JWT_SECRET=verysecretkey
-      - NODE_ENV=development
-      - EMAIL_HOST=smtp.ethereal.email
-      - EMAIL_PASS=TKJ64DySyD75dVnncu
-      - EMAIL_USER=mathew.terry98@ethereal.email
+    env_file:
+      - ./server/.env
     depends_on:
       - mongo_db
 

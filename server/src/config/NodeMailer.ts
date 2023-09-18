@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import * as path from "path";
+import path from "path";
 import hbs from "nodemailer-express-handlebars";
 
 export const Transporter = () => {

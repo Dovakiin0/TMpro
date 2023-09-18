@@ -2,7 +2,7 @@ import User from "../models/User";
 import mongoose from "mongoose";
 import { generateJWT } from "../helper/jwt";
 import app from "../server";
-import supertest = require("supertest");
+import supertest from "supertest";
 import { IUser } from "../types/IUser";
 import { INotification } from "../types/INotification";
 import { ITask } from "../types/ITask";
