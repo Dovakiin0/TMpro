@@ -17,17 +17,3 @@ services:
       - "5001:5001"
     env_file:
       - .env.production
-    depends_on:
-      - mongo_db
-
-  mongo_db:
-    container_name: "TMpro_db"
-    image: mongodb/mongodb-community-server
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - db-data:/data/db
-
-volumes:
-  db-data:
