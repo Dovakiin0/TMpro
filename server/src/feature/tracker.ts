@@ -4,6 +4,8 @@ import { eventEmitter } from "../server";
 import { ITask } from "../types/ITask";
 import { Response } from "express";
 import { INotification } from "../types/INotification";
+import { sendEmail } from "../helper/mailer";
+import User from "../models/User";
 
 // Utility function to track what deadlines are coming
 export async function trackDeadlines() {
@@ -24,7 +26,7 @@ export async function trackDeadlines() {
       completed: false,
     })
       .select("title deadline OneHourDue thirtyMDue tenMDue") // Select only certain for optimization
-      .populate("user", "_id"); // populate user and get their _id
+      .populate("user", "_id email username"); // populate user
 
     // Filter tasks into different intervals based on their deadlines
     const oneHourTasks = tasks.filter((task) => {
@@ -99,5 +101,21 @@ async function saveNotificationToDb(task: ITask, message: string) {
     userId: task.user._id,
   });
   await notification.save();
+
+  // send email to the user
+  const user = await User.findById(task.user._id);
+  if (user) {
+    sendEmail({
+      to: user.email,
+      subject: "Reminder: Nearing deadline",
+      context: {
+        username: user.username,
+        message: `Your Task ${task.title} is ${message}`,
+      },
+      template: "reminder",
+    });
+  }
+
+  // emits event when the notification is created
   eventEmitter.emit("taskNotification", notification);
 }

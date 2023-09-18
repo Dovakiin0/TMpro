@@ -1,8 +1,7 @@
-import { trackDeadlines, sendNotification } from "../feature/tracker";
+import { sendNotification } from "../feature/tracker";
 import TaskNotification from "../models/Notification";
 import { IRequest } from "../types/IRequest";
 import type { Response } from "express";
-import { TRACK_TIME } from "../helper/constants";
 import { eventEmitter } from "../server";
 
 /* 
