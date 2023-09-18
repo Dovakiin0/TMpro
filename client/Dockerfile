@@ -1,8 +1,8 @@
 # Base Image
 FROM node:18-alpine as base
 WORKDIR /app/TMPro/client
-COPY package.json ./
-RUN yarn
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
