@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-- [Introduction]("#introduction")
-- [About]("#about")
-- [Installation]("#installation")
-  - [Prerequisites]("#prerequisites")
-  - [Docker]("#docker")
-  - [Manual]("#manual")
-- [Production]("#production")
-- [Testing]("#testing")
+- [Introduction](#introduction)
+- [About](#about)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Docker](#docker)
+  - [Manual](#manual)
+- [Production](#production)
+- [Testing](#testing)
 
 ## Introduction
 
@@ -30,7 +30,7 @@ TMpro is developed with Nodejs and Reactjs. The technologies used are:
 ### Prerequisites
 
 Before proceeding, make sure you have **Nodejs** and **mongoDB** installed in your local machine. (You can use Mongo atlas if you prefer).  
-Head over to `server/` directory and open `.env.example` file and fill in the details. Then rename the file to `.env`. You can use [Ethereal]("https://ethereal.email/") for dummy email.
+Head over to `server/` directory and open `.env.example` file and fill in the details. Then rename the file to `.env`. You can use [Ethereal](https://ethereal.email) for dummy email.
 
 ### Docker
 
