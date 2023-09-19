@@ -138,6 +138,7 @@ export default function TaskCard({
               mt="md"
               radius="md"
               onClick={handleCompleteClick}
+              loading={loading}
             >
               {completed ? "Mark as Incomplete" : "Mark as Completed"}
             </Button>
