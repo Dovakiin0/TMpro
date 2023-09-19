@@ -25,7 +25,7 @@ export async function trackDeadlines() {
       },
       completed: false,
     })
-      .select("title deadline OneHourDue thirtyMDue tenMDue") // Select only certain for optimization
+      .select("title deadline OneHourDue thirtyMDue tenMDue")
       .populate("user", "_id email username"); // populate user
 
     // Filter tasks into different intervals based on their deadlines
@@ -65,7 +65,7 @@ export function sendNotification(notification: INotification, res: Response) {
   res.write(`data: ${JSON.stringify(notification)}\n\n`);
 }
 
-// function to save notification of connected or not connected client and update the task database
+// function to save notification and update the task database
 export async function saveNotification(
   oneHourTasks: ITask[],
   thirtyMinutesTasks: ITask[],

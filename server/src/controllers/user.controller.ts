@@ -35,11 +35,13 @@ const login = asyncHandler(async (req: IRequest, res: Response) => {
   const user = await User.findOne({ email });
 
   if (!user) {
+    // if no user found
     res.status(401);
     throw new Error("Email or password is incorrect");
   }
 
   if (!user.isVerified) {
+    // if user is not verified
     res.status(400);
     throw new Error("Please verify your email");
   }
@@ -114,11 +116,12 @@ const generateOtpForUser = asyncHandler(
       throw new Error("User does not exists");
     }
 
-    const otpExpirationTimeStamp = new Date();
+    const otpExpirationTimeStamp = new Date(); // OTP expiration time
     otpExpirationTimeStamp.setMinutes(otpExpirationTimeStamp.getMinutes() + 15); // 15 minutes
 
     const generatedOTP = generateOTP(); // generate a new OTP
 
+    // save otp and expiry to user database
     user.otp = generatedOTP;
     user.otpExpiration = otpExpirationTimeStamp;
 
@@ -160,9 +163,10 @@ const verifyOTP = asyncHandler(async (req: IRequest, res: Response) => {
 
   if (user.otp !== otp && currentTimeStamp > user.otpExpiration) {
     res.status(400);
-    throw new Error("Your otp has been expired");
+    throw new Error("Your OTP is either invalid or expired"); // Check if otp matched with the one generated and is not expired
   }
 
+  // update user database
   user.isVerified = true;
   user.otp = null;
   user.otpExpiration = null;

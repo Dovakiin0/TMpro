@@ -73,9 +73,7 @@ function useNotification() {
         dispatch(setNotification(response.data));
       }
     } catch (err: any) {
-      Error({
-        message: "Something went wrong!",
-      });
+      Error({ message: "Something went wrong! Please try again later" });
     } finally {
       setLoading(false);
     }
@@ -89,6 +87,7 @@ function useNotification() {
         dispatch(markAsRead(_id));
       }
     } catch (err: any) {
+      Error({ message: "Something went wrong! Please try again later" });
     } finally {
       setLoading(false);
     }

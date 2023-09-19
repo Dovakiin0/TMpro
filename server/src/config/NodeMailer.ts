@@ -22,7 +22,7 @@ export const Transporter = () => {
       },
     });
   }
-
+  // using handlebars to create templates for the email
   const handleBarsOptions: hbs.NodemailerExpressHandlebarsOptions = {
     viewEngine: {
       partialsDir: path.resolve("src/templates"),

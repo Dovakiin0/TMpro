@@ -18,9 +18,8 @@ import useAuth from "../hooks/useAuth";
 
 type Props = {};
 
-function Login({}: Props) {
-  const { authenticated, current } = useAppSelector((state) => state.auth);
-  const { login, loading } = useAuth();
+function Login({ }: Props) {
+  const { login, loading, current, authenticated } = useAuth();
   const navigate = useNavigate();
   const theme = useMantineTheme();
   const form = useForm<ILoginUser>({

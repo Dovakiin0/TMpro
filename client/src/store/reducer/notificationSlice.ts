@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { INotification } from "../../types/INotification";
-import { notifications } from "@mantine/notifications";
 
 interface NotificationState {
   count: number;
@@ -13,7 +12,7 @@ const initialState: NotificationState = {
 };
 
 const notificationSlice = createSlice({
-  name: "auth",
+  name: "notification",
   initialState,
   reducers: {
     newNotification: (state, { payload }: PayloadAction<INotification>) => {

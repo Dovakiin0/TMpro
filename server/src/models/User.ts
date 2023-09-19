@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
 );
 
 // Custom function that hashes the user password before user data save
-UserSchema.pre("save", async function(next) {
+UserSchema.pre("save", async function (next) {
   const user = this as IUser;
   if (!user.isModified("password")) return next();
   user.password = hashPassword(user.password);
@@ -25,7 +25,7 @@ UserSchema.pre("save", async function(next) {
 });
 
 // Custom function that compares the hashed password of a user
-UserSchema.methods.comparePassword = async function(password: string) {
+UserSchema.methods.comparePassword = async function (password: string) {
   const user = this as IUser;
   return comparePwd(password, user.password);
 };

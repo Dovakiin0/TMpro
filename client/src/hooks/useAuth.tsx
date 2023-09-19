@@ -8,7 +8,7 @@ import useToast from "./useToast";
 export default function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState();
-  const { current } = useAppSelector((state) => state.auth);
+  const { current, authenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const { Error, Success } = useToast();
 
@@ -116,6 +116,7 @@ export default function useAuth() {
     register,
     logoutUser,
     current,
+    authenticated,
     verifyOTP,
     generateOTP,
   };

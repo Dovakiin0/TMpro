@@ -17,7 +17,7 @@ export const eventEmitter = new EventEmitter();
 // middlewares for the application
 app.use(
   cors({
-    origin: function(origin, callback) {
+    origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true); // Allow the request
       } else {
@@ -32,7 +32,7 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms"),
 );
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // add all routes for the application
 InjectRoutes(app);

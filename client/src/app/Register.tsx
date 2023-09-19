@@ -23,6 +23,7 @@ import { RxCross2 } from "react-icons/rx";
 
 type Props = {};
 
+// function to display password requirements in popover
 function PasswordRequirement({
   meets,
   label,
@@ -43,6 +44,7 @@ function PasswordRequirement({
   );
 }
 
+// Password requirements
 const requirements = [
   { re: /[0-9]/, label: "Includes number" },
   { re: /[a-z]/, label: "Includes lowercase letter" },
@@ -50,6 +52,7 @@ const requirements = [
   { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: "Includes special symbol" },
 ];
 
+// get the strength of the password
 function getStrength(password: string) {
   let multiplier = password.length > 5 ? 0 : 1;
 
@@ -63,7 +66,7 @@ function getStrength(password: string) {
 }
 
 function Register({ }: Props) {
-  const { current, authenticated } = useAppSelector((state) => state.auth);
+  const { register, loading, current, authenticated } = useAuth();
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const form = useForm<IRegisterUser>({
@@ -94,8 +97,6 @@ function Register({ }: Props) {
   ));
   const strength = getStrength(form.values.password);
   const color = strength === 100 ? "teal" : strength > 50 ? "yellow" : "red";
-
-  const { register, loading } = useAuth();
 
   const handleSubmit = (values: IRegisterUser) => {
     if (strength < 100) {

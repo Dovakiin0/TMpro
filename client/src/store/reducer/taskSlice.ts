@@ -26,7 +26,8 @@ const taskSlice = createSlice({
       }
       state.filteredTasks = state.tasks.filter(
         (task) =>
-          task.title.includes(payload) || task.description.includes(payload),
+          task.title.toLowerCase().includes(payload.toLowerCase()) ||
+          task.description.toLowerCase().includes(payload.toLowerCase()),
       );
     },
 
