@@ -93,12 +93,17 @@ function useTask() {
     }
   };
 
-  const toggleTaskCompleted = async (_id: string, completed: boolean) => {
+  const toggleTaskCompleted = async (
+    _id: string,
+    completed: boolean,
+    cb?: () => void,
+  ) => {
     try {
       setLoading(true);
       const response = await client.put(`api/tasks/${_id}`, { completed });
       if (response.status === 200) {
         fetchTasks();
+        cb?.();
       }
     } catch (error) {
       setErrors(errors);

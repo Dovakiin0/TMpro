@@ -7,9 +7,14 @@ import { motion } from "framer-motion";
 import { selectSegementedColor } from "./TaskModal/BaseModal";
 import { ITaskRequest } from "../types/ITaskRequest";
 import { dayjs } from "../config/dayJs";
+import { useState } from "react";
 
 interface ITaskCardProps extends ITask {
-  toggleTaskCompleted: (_id: string, completed: boolean) => void;
+  toggleTaskCompleted: (
+    _id: string,
+    completed: boolean,
+    cb?: () => void,
+  ) => void;
   loading: boolean;
   editTaskId: (values: ITaskRequest, _id: string, cb?: () => void) => void;
   deleteTaskId: (_id: string) => void;
@@ -31,6 +36,7 @@ export default function TaskCard({
   deleteTaskId,
 }: ITaskCardProps) {
   const [opened, { open, close }] = useDisclosure(false);
+  const [completeLoading, setCompleteLoading] = useState<boolean>(false);
 
   // Store deadline date in a proper format
   const FormatedDeadline = `${dayjs(deadline).fromNow()} ${dayjs(
@@ -39,7 +45,10 @@ export default function TaskCard({
 
   function handleCompleteClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
-    toggleTaskCompleted(_id, !completed);
+    setCompleteLoading(true);
+    toggleTaskCompleted(_id, !completed, () => {
+      setCompleteLoading(false);
+    });
   }
 
   // Function to get Color based on state of deadline
@@ -138,7 +147,7 @@ export default function TaskCard({
               mt="md"
               radius="md"
               onClick={handleCompleteClick}
-              loading={loading}
+              loading={completeLoading}
             >
               {completed ? "Mark as Incomplete" : "Mark as Completed"}
             </Button>
